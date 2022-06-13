@@ -1,0 +1,18 @@
+name = "DrawRNA"
+uuid = "eab79ae3-43af-4078-b4a3-b180fd2797a7"
+authors = ["Marco Matthies <marco.matthies@gmail.com>"]
+version = "0.1.0"
+
+[deps]
+CairoMakie = "13f3f980-e62b-5c42-98c6-ff1f3baf88f0"
+ColorSchemes = "35d6a980-a343-548e-a6ea-1d62b119f2f4"
+Luxor = "ae8d54c2-7ccd-5906-9d76-62fc9837b5bc"
+Statistics = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
+ViennaRNA = "05a721ad-238d-4945-8c85-8b5c1fff3465"
+
+[compat]
+CairoMakie = "0.7"
+ColorSchemes = "3.18"
+Luxor = "3.3"
+ViennaRNA = "0.7"
+julia = "1.6"
