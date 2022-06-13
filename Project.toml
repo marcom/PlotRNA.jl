@@ -1,4 +1,4 @@
-name = "DrawRNA"
+name = "PlotRNA"
 uuid = "eab79ae3-43af-4078-b4a3-b180fd2797a7"
 authors = ["Marco Matthies <marco.matthies@gmail.com>"]
 version = "0.1.0"

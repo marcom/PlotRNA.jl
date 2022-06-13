@@ -31,4 +31,4 @@ looks a bit nicer but currently has a rather large time to first plot
 ## Other Julia packages for RNA secondary structure prediction
 
 - [ViennaRNA.jl](https://github.com/marcom/ViennaRNA.jl)
-- [LinearFold](https://github.com/marcom/LinearFold.jl)
+- [LinearFold.jl](https://github.com/marcom/LinearFold.jl)

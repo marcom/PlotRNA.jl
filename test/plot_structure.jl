@@ -1,5 +1,5 @@
-using DrawRNA
-using DrawRNA: Luxor, Makie
+using PlotRNA
+using PlotRNA: Luxor, Makie
 
 @testset "plot_structure" begin
     w = "((((.....))))."
@@ -16,5 +16,5 @@ end
 @testset "plot_structure_makie" begin
     w = "((((.....))))."
     s = "GGCGAAUACCGCCU"
-    @test DrawRNA.plot_structure_makie(w) isa Makie.Figure
+    @test PlotRNA.plot_structure_makie(w) isa Makie.Figure
 end
