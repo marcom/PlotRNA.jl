@@ -1,6 +1,13 @@
 # DrawRNA.jl
 Draw nucleic acid secondary structures with Julia
 
+## Installation
+
+As DrawRNA is not yet registered you have to add it from github:
+```julia
+] add https://github.com/marcom/DrawRNA.jl
+```
+
 ## Usage
 
 ```julia
