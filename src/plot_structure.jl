@@ -6,14 +6,6 @@ using CairoMakie: Makie, Axis, Colorbar, DataAspect, Figure,
     xlims!, ylims!
 using ViennaRNA: FoldCompound, Pairtable, basepairs, partfn, plot_coords, prob_of_basepairs
 
-# TODO
-# - text font for bases
-# - legend for base_colors gradient
-# - choose png or svg output
-# - be able to ignore base_colors if not desired,
-#   with base_colorscheme == flag_id it is white by default
-# - make `constants` block configurable
-
 """
     plot_structure(structure; [sequence, layout_type, base_colors, base_colorscheme])
 
@@ -24,6 +16,14 @@ function plot_structure(structure::AbstractString;
                         layout_type::Symbol=:simple,
                         base_colors::Vector=zeros(length(structure)),
                         base_colorscheme::ColorScheme=colorschemes[:flag_id])
+    # TODO
+    # - text font for bases
+    # - legend for base_colors gradient
+    # - choose png or svg output
+    # - be able to ignore base_colors if not desired,
+    #   with base_colorscheme == flag_id it is white by default
+    # - make `constants` block configurable
+
     # constants
     base_radius = 10
     font_size = 20
@@ -92,7 +92,7 @@ function plot_structure(structure::AbstractString;
     y_width = 2 * (ceil(max(abs(y_min), abs(y_max))) + base_radius + y_pad)
 
     # Note:
-    # in Luxor, (0,0) is the center,
+    # in Luxor (when using the @ commands like @draw), (0,0) is the center,
     #           (-width/2, -height/2) is top left
     #       and (width/2, height/2) is lower right
     @draw begin
