@@ -39,7 +39,8 @@ looks a bit nicer but currently has a rather large time to first plot
 using PlotRNA
 VARNA.plot("(((...)))")
 VARNA.plot("(((...)))"; seq="GCGAAACGC")
-VARNA.plot_compare(dbn1="(((.....)))", seq1="GCGAAAAACGC", dbn2="((-...---))", seq2="GG-AAA---CC")
+VARNA.plot_compare(dbn1="(((.....)))", seq1="GCGAAAAACGC",
+                   dbn2="((-...---))", seq2="GG-AAA---CC")
 ```
 
 There are many more (not yet documented) keyword arguments that allow
