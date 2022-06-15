@@ -1,10 +1,32 @@
+module VARNA
+
+using Scratch: @get_scratch!
+
+const _download_url = "https://varna.lri.fr/bin/VARNAv3-93.jar"
+
+# this will be filled in by `__init__()`
+_download_cache = ""
+
+function __init__()
+    global _download_cache = @get_scratch!("jar")
+end
+
+function _download_varna_jar(url=_download_url)
+    fname = joinpath(_download_cache, basename(url))
+    if !isfile(fname)
+        @info "downloading VARNA jar file from $url"
+        download(url, fname)
+    end
+    return fname
+end
+
 # Notes
 # - VARNA doesn't warn or error on unknown options, e.g.
 #   `-foo` : error, no argument for option foo
 #   `-foo bar` : no error or warning
 
 """
-    plot_varna(dbn; [seq], [other kwargs...]) -> ouput_file
+    plot(dbn; [seq], [other kwargs...]) -> ouput_file
 
 Plot a secondary structure `dbn` in dot-bracket notation with VARNA.
 
@@ -12,10 +34,10 @@ Notes:
 - can accept pseudoknotted structures, e.g. `((((...[[[...))))...]]]`
 - `chemical_probing` can be used for markers on the backbone (connecting bases)
 """
-function plot_varna(dbn::AbstractString;
-                    seq::AbstractString=' '^length(dbn),
-                    varna_jarpath::AbstractString,
-                    kwargs...)
+function plot(dbn::AbstractString;
+              seq::AbstractString=' '^length(dbn),
+              kwargs...)
+    varna_jarpath = _download_varna_jar()
     if length(dbn) != length(seq)
         throw(ArgumentError("structure and sequence must have same length: $(length(dbn)) != $(length(seq))"))
     end
@@ -30,7 +52,7 @@ function plot_varna(dbn::AbstractString;
 end
 
 """
-    plot_varna_compare(; dbn1, seq1, dbn2, seq2, [other kwargs...]) -> output_file
+    plot_compare(; dbn1, seq1, dbn2, seq2, [other kwargs...]) -> output_file
 
 Plot two aligned (structure, sequence) pairs in comparative mode with
 VARNA.
@@ -38,13 +60,13 @@ VARNA.
 Notes:
 - pseudoknots not supported here
 """
-function plot_varna_compare(; dbn1::AbstractString,
-                            dbn2::AbstractString,
-                            seq1::AbstractString,
-                            seq2::AbstractString,
-                            gap_color::AbstractString="",
-                            varna_jarpath::AbstractString,
-                            kwargs...)
+function plot_compare(; dbn1::AbstractString,
+                      dbn2::AbstractString,
+                      seq1::AbstractString,
+                      seq2::AbstractString,
+                      gap_color::AbstractString="",
+                      kwargs...)
+    varna_jarpath = _download_varna_jar()
     if length(dbn1) != length(dbn2) || length(dbn1) != length(seq1) || length(dbn1) != length(seq2)
         throw(ArgumentError("all structures and sequences must have same length, here they are: " *
             "dbn1=$(length(dbn1)), seq1=$(length(seq1)), dbn2=$(length(dbn2)), seq2=$(length(seq2)))"))
@@ -188,3 +210,5 @@ function _cmd_varna_common(len_struct::Integer;
     end
     return cmd
 end
+
+end # module VARNA
