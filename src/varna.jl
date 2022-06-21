@@ -36,14 +36,19 @@ Notes:
 """
 function plot(dbn::AbstractString;
               seq::AbstractString=' '^length(dbn),
-              kwargs...)
+              savepath::AbstractString="",
+              plot_opts...)
     varna_jarpath = _download_varna_jar()
     if length(dbn) != length(seq)
         throw(ArgumentError("structure and sequence must have same length: $(length(dbn)) != $(length(seq))"))
     end
-    outdir = mktempdir()
-    outfile = joinpath(outdir, "out.png")
-    cmd = _cmd_varna_common(length(dbn); varna_jarpath, kwargs...)
+    if savepath == ""
+        outdir = mktempdir()
+        outfile = joinpath(outdir, "out.png")
+    else
+        outfile = savepath
+    end
+    cmd = _cmd_varna_common(length(dbn); varna_jarpath, plot_opts...)
     cmd = `$cmd -o $outfile
                 -structureDBN $dbn
                 -sequenceDBN $seq`
@@ -65,15 +70,20 @@ function plot_compare(; dbn1::AbstractString,
                       seq1::AbstractString,
                       seq2::AbstractString,
                       gap_color::AbstractString="",
-                      kwargs...)
+                      savepath::AbstractString="",
+                      plot_opts...)
     varna_jarpath = _download_varna_jar()
     if length(dbn1) != length(dbn2) || length(dbn1) != length(seq1) || length(dbn1) != length(seq2)
         throw(ArgumentError("all structures and sequences must have same length, here they are: " *
             "dbn1=$(length(dbn1)), seq1=$(length(seq1)), dbn2=$(length(dbn2)), seq2=$(length(seq2)))"))
     end
-    outdir = mktempdir()
-    outfile = joinpath(outdir, "out.png")
-    cmd = _cmd_varna_common(length(dbn1); varna_jarpath, kwargs...)
+    if savepath == ""
+        outdir = mktempdir()
+        outfile = joinpath(outdir, "out.png")
+    else
+        outfile = savepath
+    end
+    cmd = _cmd_varna_common(length(dbn1); varna_jarpath, plot_opts...)
     cmd = `$cmd -o $outfile
                 -comparisonMode     true
                 -firstStructure     $dbn1
