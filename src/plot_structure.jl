@@ -95,7 +95,7 @@ function plot_structure(structure::AbstractString;
     # in Luxor (when using the @ commands like @draw), (0,0) is the center,
     #           (-width/2, -height/2) is top left
     #       and (width/2, height/2) is lower right
-    @draw begin
+    out = @draw begin
 	background(background_color)
 	fontsize(font_size)
 	# backbone
@@ -115,6 +115,7 @@ function plot_structure(structure::AbstractString;
                       base_colorscheme[base_colors[i]])
 	end
     end x_width y_width
+    return out
 end
 
 plot_structure(pt::Pairtable;

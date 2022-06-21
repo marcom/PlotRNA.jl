@@ -75,12 +75,12 @@ function plot_compare(; dbn1::AbstractString,
     outfile = joinpath(outdir, "out.png")
     cmd = _cmd_varna_common(length(dbn1); varna_jarpath, kwargs...)
     cmd = `$cmd -o $outfile
-                -comparisonMode true
-                -firstStructure $dbn1
-                -firstSequence $seq1
-                -secondStructure $dbn2
-                -secondSequence $seq2
-                -gapsColor $gap_color`
+                -comparisonMode     true
+                -firstStructure     $dbn1
+                -firstSequence      $seq1
+                -secondStructure    $dbn2
+                -secondSequence     $seq2
+                -gapsColor          $gap_color`
     run(cmd)
     return outfile
 end
@@ -150,10 +150,12 @@ function _cmd_varna_common(len_struct::Integer;
     
     # check arguments
     if algorithm ∉ (:line, :circular, :radiate, :naview)
-        throw(ArgumentError("algorithm must be one of: :line, :circular, :radiate, :naview"))
+        throw(ArgumentError("algorithm must be one of: "
+                            ":line, :circular, :radiate, :naview"))
     end
     if length(base_style_define) < length(base_style_apply_on)
-        throw(ArgumentError("fewer base styles defined (base_style_defines) than base style applications (base_style_apply_on)"))
+        throw(ArgumentError("fewer base styles defined (base_style_defines) " *
+            "than base style applications (base_style_apply_on)"))
     end
     if ! isempty(color_map) && length(color_map) != length(len_struct)
         throw(ArgumentError("color_map must have same length as structure"))
@@ -161,52 +163,52 @@ function _cmd_varna_common(len_struct::Integer;
 
     cmd = `java -Djava.awt.headless=true
                 -cp $varna_jarpath fr.orsay.lri.varna.applications.VARNAcmd
-                -algorithm $(string(algorithm))
-                -annotations $annotations
-                -autoHelices $auto_helices
-                -autoInteriorLoops $auto_interior_loops
-                -autoTerminalLoops $auto_terminal_loops
-                -auxBPs $additional_basepairs
-                -backbone $backbone_color
-                -background $background_color
-                -baseInner $base_inner_color
-                -baseName $base_name_color
-                -baseNum $base_num_color
-                -baseOutline $base_outline_color
-                -border $border_dist
-                -bp $basepair_color
-                -bpIncrement $line_mode_bp_vertical_scale
-                -bpStyle $basepair_style
-                -chemProb $chemical_probing
-                -drawBackbone $draw_backbone
-                -drawBases $draw_bases
-                -drawNC $draw_noncanonical_bp
-                -drawTertiary $draw_tertiary_bp
-                -error $show_errors
-                -fillBases $fill_bases
-                -flat $flat_radiate_mode
-                -highlightRegion $highlight_region
-                -nsBasesColor $nonstandard_bases_color
-                -periodNum $numbering_period
-                -resolution $(float(resolution))
-                -rotation $(float(rotation))
-                -spaceBetweenBases $space_between_bases
-                -title $title
-                -titleColor $title_color
-                -titleSize $title_size
-                -warning $show_warnings
-                -zoom $(float(zoom))`
+                -algorithm            $(string(algorithm))
+                -annotations          $annotations
+                -autoHelices          $auto_helices
+                -autoInteriorLoops    $auto_interior_loops
+                -autoTerminalLoops    $auto_terminal_loops
+                -auxBPs               $additional_basepairs
+                -backbone             $backbone_color
+                -background           $background_color
+                -baseInner            $base_inner_color
+                -baseName             $base_name_color
+                -baseNum              $base_num_color
+                -baseOutline          $base_outline_color
+                -border               $border_dist
+                -bp                   $basepair_color
+                -bpIncrement          $line_mode_bp_vertical_scale
+                -bpStyle              $basepair_style
+                -chemProb             $chemical_probing
+                -drawBackbone         $draw_backbone
+                -drawBases            $draw_bases
+                -drawNC               $draw_noncanonical_bp
+                -drawTertiary         $draw_tertiary_bp
+                -error                $show_errors
+                -fillBases            $fill_bases
+                -flat                 $flat_radiate_mode
+                -highlightRegion      $highlight_region
+                -nsBasesColor         $nonstandard_bases_color
+                -periodNum            $numbering_period
+                -resolution           $(float(resolution))
+                -rotation             $(float(rotation))
+                -spaceBetweenBases    $space_between_bases
+                -title                $title
+                -titleColor           $title_color
+                -titleSize            $title_size
+                -warning              $show_warnings
+                -zoom                 $(float(zoom))`
     for (i, appl) in enumerate(base_style_apply_on)
         def = base_style_define[i]
-        cmd = `$cmd -basesStyle$(i) $def
-                    -applyBasesStyle$(i)on $appl`
+        cmd = `$cmd -basesStyle$(i)           $def
+                    -applyBasesStyle$(i)on    $appl`
     end
     if ! isempty(color_map)
-        cmd = `$cmd -colorMap $(join(float.(color_map), ';'))
-                    -colorMapCaption $color_map_caption
-                    -colorMapStyle $color_map_style
-                    -colorMapMin $(float(color_map_min))
-                    -colorMapMax $(float(color_map_max))`
+        cmd = `$cmd -colorMap           $(join(float.(color_map), ';'))
+                    -colorMapCaption    $color_map_caption
+                    -colorMapStyle      $color_map_style
+                    -colorMapMin        $(float(color_map_min))
+                    -colorMapMax        $(float(color_map_max))`
     end
     return cmd
 end
