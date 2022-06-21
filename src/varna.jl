@@ -150,7 +150,7 @@ function _cmd_varna_common(len_struct::Integer;
     
     # check arguments
     if algorithm ∉ (:line, :circular, :radiate, :naview)
-        throw(ArgumentError("algorithm must be one of: "
+        throw(ArgumentError("algorithm must be one of: " *
                             ":line, :circular, :radiate, :naview"))
     end
     if length(base_style_define) < length(base_style_apply_on)
