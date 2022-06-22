@@ -59,6 +59,7 @@ documentation](https://varna.lri.fr/index.php?lang=en&page=command&css=varna).
   - `stericity=[cis|trans]`: strand orientation
   - `color`: base pair color as string
   - `thickness`: basepair thickness as int
+
   Example: "(1,10);(2,9):edge5=h,edge3=s,stericity=cis,color=#ff0000,thickness=5"
 
 - `annotations=""`: annotation string of the form
@@ -69,6 +70,7 @@ documentation](https://varna.lri.fr/index.php?lang=en&page=command&css=varna).
   - `anchor`: which base should annotation be anchored to
   - `size` font size as an integer
   - `color` as a string e.g. "#FF0000"
+
   Example: "Static annotation:type=P,x=100,y=50,size=12,color=#ff0000;Base annotation:type=B,anchor=42"
 
 - `auto_helices=false`: annotate helix n with "Hn"
@@ -125,6 +127,7 @@ documentation](https://varna.lri.fr/index.php?lang=en&page=command&css=varna).
   - `radius`: thickness of highlight
   - `fill=color`: highlight fill color
   - `outline=color`: highlight outline color
+
   Example: "2-5:radius=10,fill=#00ff00;7-12:radius=10,fill=#00ff00,outline=#000000"
 
 - `line_mode_bp_vertical_scale=1.0`: vertical scaling of basepair
