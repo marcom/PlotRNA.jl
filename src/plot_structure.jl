@@ -7,7 +7,7 @@ using CairoMakie: Makie, Axis, Colorbar, DataAspect, Figure,
 using ViennaRNA: FoldCompound, Pairtable, basepairs, partfn, plot_coords, prob_of_basepairs
 
 """
-    plot_structure(structure; [sequence], [savepath], [more plot opts...]) -> Luxor.Drawing
+    plot_structure(structure; [sequence, savepath, more plot opts...]) -> Luxor.Drawing
 
 Plot an RNA secondary structure given by `structure` and optionally
 `sequence`. If `savepath` is nonempty the image is written there.
@@ -129,7 +129,7 @@ function plot_structure(structure::AbstractString;
                       base_colorscheme[base_colors[i]])
 	end
     end x_width y_width
-    if savepath != ""
+    if ! isempty(savepath)
         open(savepath, "w") do io
             write(io, out.bufferdata)
         end
@@ -142,14 +142,14 @@ plot_structure(pt::Pairtable; kwargs...) =
 
 
 """
-    plot_structure_makie(structure; [sequence, filepath, layout_type, colorscheme])
+    plot_structure_makie(structure; [sequence, savepath, layout_type, colorscheme])
 
-Plot a secondary structure to a PNG image or PDF file depending on `filepath` ending.
+Plot a secondary structure to a PNG image or PDF file depending on `savepath` ending.
 """
 function plot_structure_makie(
     structure::AbstractString;
     sequence::AbstractString=" "^length(structure),
-    filepath::String = "",
+    savepath::String = "",
     layout_type::Symbol=:simple,
     colorscheme::Symbol=:lightrainbow)
 
@@ -201,8 +201,8 @@ function plot_structure_makie(
         height = 12,
     )
     ax.aspect = DataAspect()
-    if ! isempty(filepath)
-        save(filepath, f)
+    if ! isempty(savepath)
+        save(savepath, f)
     end
     return f
 end
