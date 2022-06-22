@@ -113,6 +113,7 @@ documentation](https://varna.lri.fr/index.php?lang=en&page=command&css=varna).
   - `radius`: thickness of highlight
   - `fill=color`: highlight fill color
   - `outline=color`: highlight outline color
+  Example: "2-5:radius=10,fill=#00ff00;7-12:radius=10,fill=#00ff00,outline=#000000"
 
 - `line_mode_bp_vertical_scale=1.0`: vertical scaling of basepair
   lines in the `:line` layout algorithm
