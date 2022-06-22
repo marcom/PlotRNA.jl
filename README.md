@@ -70,26 +70,27 @@ documentation](https://varna.lri.fr/index.php?lang=en&page=command&css=varna).
    use. Options are: `:line`, `:circular`, `:naview`, `:radiate.`.
 
 - `additional_basepairs=""`: the option is called `-auxBPs` in
-  VARNA. String of the form "(i1,j1);(i2,j2):opt1=val1,opt2=val2;...".
+  VARNA. String of the form `"(i1,j1);(i2,j2):opt1=val1,opt2=val2;..."`.
   - `edge5`, `edge3=[wc|h|s]`: classification of noncanonical basepair
     as defined by Leontis & Westhof. Values are "wc" (Watson-Crick
     edge), "h" (Hoogsteen edge), "s" (sugar edge)
   - `stericity=[cis|trans]`: strand orientation
   - `color`: base pair color as string
-  - `thickness`: basepair thickness as int
+  - `thickness`: basepair thickness as integer
 
-  Example: "(1,10);(2,9):edge5=h,edge3=s,stericity=cis,color=#ff0000,thickness=5"
+  Example: `additional_basepairs="(1,10);(2,9):edge5=h,edge3=s,stericity=cis,color=#ff0000,thickness=5"`
 
 - `annotations=""`: annotation string of the form
-  "text1:opt1=val1,...;type=T2,opt2=val2;...".
-  - `type=[P|B|H|L]`: can be "P" (static), "B" (anchored on base), "H" (anchored
-    on helix), or "L" (anchored on loop)
+  `"text1:opt1=val1,...;type=T2,opt2=val2;..."`.
+  - `type=[P|B|H|L]`: can be `P` (static), `B` (anchored on base), `H` (anchored
+    on helix), or `L` (anchored on loop)
   - `x`, `y`: x and y coordinates for a static annotation (`P`)
-  - `anchor`: which base should annotation be anchored to
+  - `anchor`: which base should annotation be anchored to (not
+    applicable for static annotations)
   - `size` font size as an integer
   - `color` as a string e.g. "#FF0000"
 
-  Example: "Static annotation:type=P,x=100,y=50,size=12,color=#ff0000;Base annotation:type=B,anchor=42"
+  Example: `annotations="Static annotation:type=P,x=100,y=50,size=12,color=#ff0000;Base annotation:type=B,anchor=42"`
 
 - `auto_helices=false`: annotate helix n with "Hn"
 - `auto_interior_loops=false`: annotate interior loop n with "In"
@@ -113,7 +114,7 @@ documentation](https://varna.lri.fr/index.php?lang=en&page=command&css=varna).
 - `border_dist="0x0"`: x and y distance of drawing area from border
 
 - `chemical_probing=""`: string of the form
-   "a1-b1:opt1=v1,...;a2-b2:opt1=v2,...".  Here a1 and b1 are adjacent
+   `"a1-b1:opt1=v1,...;a2-b2:opt1=v2,..."`.  Here a1 and b1 are adjacent
    bases, the marker is placed on the backbone between them.
    Options are:
    - `glyph=[arrow|dot|pin|triangle]`: shape of annotation
@@ -128,8 +129,7 @@ documentation](https://varna.lri.fr/index.php?lang=en&page=command&css=varna).
 
 - `color_map_style="heat"`: color map style. Predefined styles are:
   "red", "blue", "green", "heat", "energy", and "bw". A custom palette
-  can be passed in the form "0:#ff0000;1:#ffffff" which is used
-  through linear interpolation.
+  can be passed in the form `"0:#ff0000;1:#ffffff"`.
 
 - `draw_backbone=true`
 - `draw_bases=true`
@@ -141,12 +141,12 @@ documentation](https://varna.lri.fr/index.php?lang=en&page=command&css=varna).
   `:radiate` layout algorithm.
 
 - `highlight_region=""`: string for highlighting consecutive regions
-  of bases of the format "i1-j1:opt1=val1,...;i2-j2:opt1=val2,...". Options are:
+  of bases of the format `"i1-j1:opt1=val1,...;i2-j2:opt1=val2,..."`. Options are:
   - `radius`: thickness of highlight
   - `fill=color`: highlight fill color
   - `outline=color`: highlight outline color
 
-  Example: "2-5:radius=10,fill=#00ff00;7-12:radius=10,fill=#00ff00,outline=#000000"
+  Example: `highlight_region="2-5:radius=10,fill=#00ff00;7-12:radius=10,fill=#00ff00,outline=#000000"`
 
 - `line_mode_bp_vertical_scale=1.0`: vertical scaling of basepair
   lines in the `:line` layout algorithm
