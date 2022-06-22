@@ -43,6 +43,21 @@ VARNA.plot_compare(dbn1="(((.....)))", seq1="GCGAAAAACGC",
                    dbn2="((-...---))", seq2="GG-AAA---CC")
 ```
 
+#### Note: Java must be installed for VARNA plotting to work
+
+You will need a working Java installation (can be headless i think).
+You can test this by running:
+```julia
+run(`java -version`)
+```
+If you don't get an error, plotting with VARNA should work.
+
+The VARNA jar file will get downloaded automatically the first time
+you plot something with VARNA. It gets stored in a scratch space that
+gets cleaned up by the Julia package manager when you uninstall
+PlotRNA.
+
+
 #### Plot options
 
 More details about these parameters can be found in the [VARNA
@@ -144,31 +159,6 @@ documentation](https://varna.lri.fr/index.php?lang=en&page=command&css=varna).
 - `title_color=""`
 - `title_size=18`: title font size
 - `zoom=1.0`
-
-
-#### Note: Java must be installed
-
-You will need a working Java installation (can be headless i think).
-You can test this by running:
-```julia
-run(`java -version`)
-```
-If you don't get an error, plotting with VARNA should work.
-
-The VARNA jar file will get downloaded automatically the first time
-you plot something with VARNA. It gets stored in a scratch space that
-gets cleaned up by the Julia package manager when you uninstall
-PlotRNA.
-
-#### Warning: output files are saved to tmpdir
-
-At the moment, the VARNA plot functions save the PNG they create in a
-temporary directory that gets deleted when the Julia session ends.
-The plotting functions return the file name of the image created.  You
-have to copy that file to another location before the Julia session
-ends, otherwise the file will be gone!
-
-This should be improved in the future.
 
 
 ## Other Julia packages for RNA secondary structure prediction
