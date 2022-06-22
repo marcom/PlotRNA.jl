@@ -84,14 +84,16 @@ documentation](https://varna.lri.fr/index.php?lang=en&page=command&css=varna).
 - `border_dist="0x0"`: x and y distance of drawing area from border,
   e.g. `10x20`
 
-- `chemical_probing=""`: string of the form
-   `"a1-b1:opt1=v1,...;a2-b2:opt1=v2,..."`.  Here a1 and b1 are adjacent
-   bases, the marker is placed on the backbone between them.
-   Options are:
+- `chemical_probing=""`: markers on the RNA backbone, for example from
+   chemical probing. String of the form
+   `"a1-b1:opt1=v1,...;a2-b2:opt1=v2,..."`.  Here a1 and b1 are
+   adjacent bases, the marker is placed on the backbone between them.
    - `glyph=[arrow|dot|pin|triangle]`: shape of annotation
    - `dir=[in|out]`: direction of annotation
    - `intensity=float`: annotation thickness
    - `color=color`
+
+  Example: `chemical_probing="2-3:glyph=triangle,dir=in,intensity=1.0,color=#ff0000;4-5:glyph=dot"`
 
 - `color_map=Float64[]`: color map for coloring bases
 - `color_map_caption=""`
@@ -141,10 +143,6 @@ documentation](https://varna.lri.fr/index.php?lang=en&page=command&css=varna).
 
 Plot a secondary structure `dbn` in dot-bracket notation with
 VARNA. Pseudoknotted structures are allowed here.
-
-Notes
-- the `chemical_probing` option can be used for markers on the
-  backbone
 
 Keyword arguments
 - `seq=""`: sequence of the RNA, must have same length as structure
