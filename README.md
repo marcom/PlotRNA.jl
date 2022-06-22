@@ -35,7 +35,7 @@ looks a bit nicer but currently has a rather large time to first plot
 
 ### Plotting structures with VARNA
 
-This uses the quite featureful (VARNA)[https://varna.lri.fr/] program
+This uses the quite featureful [VARNA](https://varna.lri.fr/) program
 via its command-line interface.
 
 ```julia
