@@ -111,7 +111,8 @@ documentation](https://varna.lri.fr/index.php?lang=en&page=command&css=varna).
   "rnaviz" (draw square equidistant from both bases), or "lw"
   (Leontis/Westhof rendering).
 
-- `border_dist="0x0"`: x and y distance of drawing area from border
+- `border_dist="0x0"`: x and y distance of drawing area from border,
+  e.g. `10x20`
 
 - `chemical_probing=""`: string of the form
    `"a1-b1:opt1=v1,...;a2-b2:opt1=v2,..."`.  Here a1 and b1 are adjacent
