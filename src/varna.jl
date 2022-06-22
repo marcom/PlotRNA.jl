@@ -1,5 +1,10 @@
 module VARNA
 
+# Notes
+# - VARNA doesn't warn or error on unknown options, e.g.
+#   `-foo` : error, no argument for option foo
+#   `-foo bar` : no error or warning
+
 using Scratch: @get_scratch!
 
 const _download_url = "https://varna.lri.fr/bin/VARNAv3-93.jar"
@@ -20,19 +25,127 @@ function _download_varna_jar(url=_download_url)
     return fname
 end
 
-# Notes
-# - VARNA doesn't warn or error on unknown options, e.g.
-#   `-foo` : error, no argument for option foo
-#   `-foo bar` : no error or warning
+const docstr_savepath = """
+- `savepath=""`: path where the image should be saved. If set to `""`,
+  the image is stored in the temp directory.
+"""
+
+const docstr_plot_opts = """
+More plot options
+
+More details about these parameters can be found in the [VARNA
+documentation](https://varna.lri.fr/index.php?lang=en&page=command&css=varna).
+
+- `algorithm=:radiate`: RNA graph layout algorithm to
+   use. Options are: `:line`, `:circular`, `:naview`, `:radiate.`.
+
+- `additional_basepairs=""`: the option is called `-auxBPs` in
+  VARNA. String of the form "(i1,j1);(i2,j2):opt1=val1,opt2=val2;...".
+  - `edge5`, `edge3=[wc|h|s]`: classification of noncanonical basepair
+    as defined by Leontis & Westhof. Values are "wc" (Watson-Crick
+    edge), "h" (Hoogsteen edge), "s" (sugar edge)
+  - `stericity=[cis|trans]`: strand orientation
+  - `color`: base pair color as string
+  - `thickness`: basepair thickness as int
+  Example: "(1,10);(2,9):edge5=h,edge3=s,stericity=cis,color=#ff0000,thickness=5"
+
+- `annotations=""`: annotation string of the form
+  "text1:opt1=val1,...;type=T2,opt2=val2;...".
+  - `type=[P|B|H|L]`: can be "P" (static), "B" (anchored on base), "H" (anchored
+    on helix), or "L" (anchored on loop)
+  - `x`, `y`: x and y coordinates for a static annotation (`P`)
+  - `anchor`: which base should annotation be anchored to
+  - `size` font size as an integer
+  - `color` as a string e.g. "#FF0000"
+  Example: "Static annotation:type=P,x=100,y=50,size=12,color=#ff0000;Base annotation:type=B,anchor=42"
+
+- `auto_helices=false`: annotate helix n with "Hn"
+- `auto_interior_loops=false`: annotate interior loop n with "In"
+- `auto_terminal_loops=false`: annotate terminal loop n with "Tn"
+- `backbone_color=""`
+- `background_color=""`
+- `base_inner_color=""`
+- `base_name_color=""`
+- `base_num_color=""`
+- `base_outline_color=""`
+
+- `base_style_define=String[]`: corresponds to the `-basesStyleX` options in VARNA.
+- `base_style_apply_on=String[]`: corresponds to the `-applyBasesStyleXon` options in VARNA.
+
+- `basepair_color=""`
+
+- `basepair_style=""`: can be "none" (no basepairs drawn), "line",
+  "rnaviz" (draw square equidistant from both bases), or "lw"
+  (Leontis/Westhof rendering).
+
+- `border_dist="0x0"`: x and y distance of drawing area from border
+
+- `chemical_probing=""`: string of the form
+   "a1-b1:opt1=v1,...;a2-b2:opt1=v2,...".  Here a1 and b1 are adjacent
+   bases, the marker is placed on the backbone between them.
+   Options are:
+   - `glyph=[arrow|dot|pin|triangle]`: shape of annotation
+   - `dir=[in|out]`: direction of annotation
+   - `intensity=float`: annotation thickness
+   - `color=color`
+
+- `color_map=Float64[]`: color map for coloring bases
+- `color_map_caption=""`
+- `color_map_min=0.0`: color map range minimum
+- `color_map_max=1.0`: color map range maximum
+
+- `color_map_style="heat"`: color map style. Predefined styles are:
+  "red", "blue", "green", "heat", "energy", and "bw". A custom palette
+  can be passed in the form "0:#ff0000;1:#ffffff" which is used
+  through linear interpolation.
+
+- `draw_backbone=true`
+- `draw_bases=true`
+- `draw_noncanonical_bp=true`
+- `draw_tertiary_bp=true`
+- `fill_bases=true`
+
+- `flat_radiate_mode=true`: align exterior loop horizontally in the
+  `:radiate` layout algorithm.
+
+- `highlight_region=""`: string for highlighting consecutive regions
+  of bases of the format "i1-j1:opt1=val1,...;i2-j2:opt1=val2,...". Options are:
+  - `radius`: thickness of highlight
+  - `fill=color`: highlight fill color
+  - `outline=color`: highlight outline color
+
+- `line_mode_bp_vertical_scale=1.0`: vertical scaling of basepair
+  lines in the `:line` layout algorithm
+
+- `nonstandard_bases_color=""`
+- `numbering_period=10`: numbering interval for bases
+- `resolution=1.0`
+- `rotation=0.0`: rotate RNA structure by an angle in degrees
+- `show_errors=true`
+- `show_warnings=true`
+- `space_between_bases=1.0`
+- `title=""`: plot title
+- `title_color=""`
+- `title_size=18`: title font size
+- `zoom=1.0`
+"""
+
 
 """
-    plot(dbn; [seq], [other kwargs...]) -> ouput_file
+    plot(dbn; [seq], [savepath], [plot_opts...]) -> outpath::String
 
-Plot a secondary structure `dbn` in dot-bracket notation with VARNA.
+Plot a secondary structure `dbn` in dot-bracket notation with
+VARNA. Pseudoknotted structures are allowed here.
 
-Notes:
-- can accept pseudoknotted structures, e.g. `((((...[[[...))))...]]]`
-- `chemical_probing` can be used for markers on the backbone (connecting bases)
+Notes
+- the `chemical_probing` option can be used for markers on the
+  backbone
+
+Keyword arguments
+- `seq=""`: sequence of the RNA, must have same length as structure
+$docstr_savepath
+
+$docstr_plot_opts
 """
 function plot(dbn::AbstractString;
               seq::AbstractString=' '^length(dbn),
@@ -57,13 +170,21 @@ function plot(dbn::AbstractString;
 end
 
 """
-    plot_compare(; dbn1, seq1, dbn2, seq2, [other kwargs...]) -> output_file
+    plot_compare(; dbn1, seq1, dbn2, seq2, [savepath], [plot_opts...]) -> outpath::String
 
 Plot two aligned (structure, sequence) pairs in comparative mode with
-VARNA.
+VARNA. Pseudoknots are not supported here. A '-' gap character can be
+used in the aligned structures and sequences.
 
-Notes:
-- pseudoknots not supported here
+Comparative mode options
+- `dbn1`: structure of the first RNA in dot-bracket notation
+- `dbn2`: structure of second RNA, same length as `dbn1`
+- `seq1: sequence of first RNA
+- `seq2`: sequence of second RNA, same length as `seq1`
+- `gap_color=""`
+$docstr_savepath
+
+$docstr_plot_opts
 """
 function plot_compare(; dbn1::AbstractString,
                       dbn2::AbstractString,
