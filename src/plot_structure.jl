@@ -7,12 +7,22 @@ using CairoMakie: Makie, Axis, Colorbar, DataAspect, Figure,
 using ViennaRNA: FoldCompound, Pairtable, basepairs, partfn, plot_coords, prob_of_basepairs
 
 """
-    plot_structure(structure; [sequence, layout_type, base_colors, base_colorscheme])
+    plot_structure(structure; [sequence], [savepath], [more plot opts...]) -> Luxor.Drawing
 
-Plot a secondary structure to a PNG image.
+Plot an RNA secondary structure given by `structure` and optionally
+`sequence`. If `savepath` is nonempty the image is written there.
+
+Plot options:
+
+- `layout_type=:simple` graph layout algorithm, one of `:simple`,
+  `:naview`, `:circular`, `:turtle`, `:puzzler`
+- `base_colors=Float64[]` base color to choose from `base_colorscheme`,
+  vector of values 0.0 to 1.0
+- `base_colorscheme::ColorScheme=colorschemes[:flag_id]`
 """
 function plot_structure(structure::AbstractString;
                         sequence::AbstractString=" "^length(structure),
+                        savepath::AbstractString="",
                         layout_type::Symbol=:simple,
                         base_colors::Vector=zeros(length(structure)),
                         base_colorscheme::ColorScheme=colorschemes[:flag_id])
@@ -23,6 +33,10 @@ function plot_structure(structure::AbstractString;
     # - be able to ignore base_colors if not desired,
     #   with base_colorscheme == flag_id it is white by default
     # - make `constants` block configurable
+
+    if savepath != "" && !endswith(savepath, ".png")
+        throw(ArgumentError("savepath must be a filename ending in .png"))
+    end
 
     # constants
     base_radius = 10
@@ -115,16 +129,17 @@ function plot_structure(structure::AbstractString;
                       base_colorscheme[base_colors[i]])
 	end
     end x_width y_width
+    if savepath != ""
+        open(savepath, "w") do io
+            write(io, out.bufferdata)
+        end
+    end
     return out
 end
 
-plot_structure(pt::Pairtable;
-               sequence::AbstractString=" "^length(pt),
-               layout_type::Symbol=:naview,
-               base_colors::Vector=zeros(length(pt)),
-               base_colorscheme::ColorScheme=colorschemes[:flag_id]) =
-                   plot_structure(String(pt);
-                                  sequence, base_colors, base_colorscheme)
+plot_structure(pt::Pairtable; kwargs...) =
+    plot_structure(String(pt); kwargs...)
+
 
 """
     plot_structure_makie(structure; [sequence, filepath, layout_type, colorscheme])

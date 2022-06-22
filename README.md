@@ -25,6 +25,7 @@ using PlotRNA, ViennaRNA
 dbn = "(((...)))"
 seq = "GGGAAACCC"
 plot_structure(dbn)
+plot_structure(dbn; savepath="rna.png")
 plot_structure(dbn; sequence=seq, base_colors=prob_of_basepairs(seq, dbn))
 ```
 
@@ -41,7 +42,7 @@ via its command-line interface.
 ```julia
 using PlotRNA
 VARNA.plot("(((...)))")
-VARNA.plot("(((...)))"; seq="GCGAAACGC", savepath="save.png")
+VARNA.plot("(((...)))"; seq="GCGAAACGC", savepath="rna.png")
 VARNA.plot_compare(dbn1="(((.....)))", seq1="GCGAAAAACGC",
                    dbn2="((-...---))", seq2="GG-AAA---CC")
 ```
