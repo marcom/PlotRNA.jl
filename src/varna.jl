@@ -139,7 +139,7 @@ documentation](https://varna.lri.fr/index.php?lang=en&page=command&css=varna).
 
 
 """
-    plot(dbn; [seq], [savepath], [plot_opts...]) -> outpath::String
+    plot(dbn; [seq], [savepath], [plot options...]) -> outpath::String
 
 Plot a secondary structure `dbn` in dot-bracket notation with
 VARNA. Pseudoknotted structures are allowed here.
@@ -173,7 +173,7 @@ function plot(dbn::AbstractString;
 end
 
 """
-    plot_compare(; dbn1, seq1, dbn2, seq2, [savepath], [plot_opts...]) -> outpath::String
+    plot_compare(; dbn1, seq1, dbn2, seq2, [savepath], [plot options...]) -> outpath::String
 
 Plot two aligned (structure, sequence) pairs in comparative mode with
 VARNA. Pseudoknots are not supported here. A '-' gap character can be
@@ -219,6 +219,8 @@ function plot_compare(; dbn1::AbstractString,
     return outfile
 end
 
+# create Cmd string prefix common to the VARNA plot functions,
+# i.e. `java ...`
 function _cmd_varna_common(len_struct::Integer;
     varna_jarpath::AbstractString,
     algorithm::Symbol=:radiate,
@@ -282,7 +284,6 @@ function _cmd_varna_common(len_struct::Integer;
     #     -columns
     #   - input_file `-i` command-line option
     
-    # check arguments
     if algorithm ∉ (:line, :circular, :radiate, :naview)
         throw(ArgumentError("algorithm must be one of: " *
                             ":line, :circular, :radiate, :naview"))
