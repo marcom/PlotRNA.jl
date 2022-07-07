@@ -58,28 +58,28 @@ function plot_structure(structure::AbstractString;
 
     function line_connect_bases(xa, ya, xb, yb, color)
         sethue(color)
-	# TODO: line goes over the edge of a base, this is fixed in
-	# draw_base by first overwriting with background color
-	line(Point(xa, ya), Point(xb, yb), :stroke)
+        # TODO: line goes over the edge of a base, this is fixed in
+        # draw_base by first overwriting with background color
+        line(Point(xa, ya), Point(xb, yb), :stroke)
     end
     draw_backbone(xa, ya, xb, yb) =
-	line_connect_bases(xa, ya, xb, yb, backbone_color)
+        line_connect_bases(xa, ya, xb, yb, backbone_color)
     draw_basepair(xa, ya, xb, yb) =
-	line_connect_bases(xa, ya, xb, yb, basepair_color)
+        line_connect_bases(xa, ya, xb, yb, basepair_color)
     function draw_base(x, y, txt::AbstractString, fillcolor)
         p = Point(x, y)
         # overwrite with background
-	sethue(background_color)
-	circle(Point(x, y), base_radius, :fill)
+        sethue(background_color)
+        circle(Point(x, y), base_radius, :fill)
         # base_color
         sethue(fillcolor)
-	circle(p, base_radius, :fill)
+        circle(p, base_radius, :fill)
         # base circle
-	sethue(base_circle_color)
-	circle(p, base_radius, :stroke)
+        sethue(base_circle_color)
+        circle(p, base_radius, :stroke)
         # text
         sethue(base_text_color)
-	text(txt, p, halign=:center, valign=:middle)
+        text(txt, p, halign=:center, valign=:middle)
     end
 
     n = length(structure)
@@ -110,24 +110,24 @@ function plot_structure(structure::AbstractString;
     #           (-width/2, -height/2) is top left
     #       and (width/2, height/2) is lower right
     out = @draw begin
-	background(background_color)
-	fontsize(font_size)
-	# backbone
-	for i = 1:n
-	    if i != n
+        background(background_color)
+        fontsize(font_size)
+        # backbone
+        for i = 1:n
+            if i != n
                 draw_backbone(xs[i], ys[i], xs[i+1], ys[i+1])
-	    end
-	end
-	# basepairs
-	for (i,j) in basepairs(pt)
+            end
+        end
+        # basepairs
+        for (i,j) in basepairs(pt)
             draw_basepair(xs[i], ys[i], xs[j], ys[j])
-	end
+        end
         # bases (these must come last, as we overwrite too long
         # backbone and basepair lines here)
-	for i = 1:n
+        for i = 1:n
             draw_base(xs[i], ys[i], string(sequence[i]),
                       base_colorscheme[base_colors[i]])
-	end
+        end
     end x_width y_width
     if ! isempty(savepath)
         open(savepath, "w") do io
@@ -175,11 +175,11 @@ function plot_structure_makie(
     hidespines!(ax)
 
     for (i, j) in pairs
-    	if linestyles == false
+        if linestyles == false
             linestyle = :solid
-    	elseif (sequence[i], sequence[j]) in (('C','G'), ('G','C'))
+        elseif (sequence[i], sequence[j]) in (('C','G'), ('G','C'))
             linestyle = :solid
-    	elseif (sequence[i], sequence[j]) in (('A','T'), ('T','A'), ('A','U'), ('U','A'))
+        elseif (sequence[i], sequence[j]) in (('A','T'), ('T','A'), ('A','U'), ('U','A'))
             linestyle = :dash
         else
             linestyle = :dot

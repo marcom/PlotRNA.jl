@@ -283,7 +283,7 @@ function _cmd_varna_common(len_struct::Integer;
     #     -rows
     #     -columns
     #   - input_file `-i` command-line option
-    
+
     if algorithm ∉ (:line, :circular, :radiate, :naview)
         throw(ArgumentError("algorithm must be one of: " *
                             ":line, :circular, :radiate, :naview"))
