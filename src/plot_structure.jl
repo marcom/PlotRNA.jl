@@ -151,7 +151,9 @@ function plot_structure_makie(
     sequence::AbstractString=" "^length(structure),
     savepath::String = "",
     layout_type::Symbol=:simple,
-    colorscheme::Symbol=:lightrainbow)
+    colorscheme::Symbol=:lightrainbow,
+    linestyles::Bool=true,
+)
 
     fc = FoldCompound(sequence)
     partfn(fc)
@@ -173,12 +175,21 @@ function plot_structure_makie(
     hidespines!(ax)
 
     for (i, j) in pairs
+    	if linestyles == false
+            linestyle = :solid
+    	elseif (sequence[i], sequence[j]) in (('C','G'), ('G','C'))
+            linestyle = :solid
+    	elseif (sequence[i], sequence[j]) in (('A','T'), ('T','A'), ('A','U'), ('U','A'))
+            linestyle = :dash
+        else
+            linestyle = :dot
+        end
         lines!(
             [x_coords[i], x_coords[j]],
             [y_coords[i], y_coords[j]],
-            color = :black,
-            linestyle = :dot,
-            linewidth = 1,
+            color = (:black, 0.5),
+            linestyle = linestyle,
+            linewidth = 0.8,
         )
     end
     scatterlines!(ax, x_coords, y_coords,
