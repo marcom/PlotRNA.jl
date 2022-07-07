@@ -175,11 +175,11 @@ function plot_structure_makie(
     hidespines!(ax)
 
     for (i, j) in pairs
-	if linestyles == false
+    	if linestyles == false
             linestyle = :solid
-        elseif all(occursin.((sequence[i], sequence[j]), "CG"))
+	elseif (sequence[i], sequence[j]) in (('C','G'), ('G','C'))
             linestyle = :solid
-        elseif all(occursin.((sequence[i], sequence[j]), "AUT"))
+	elseif (sequence[i], sequence[j]) in (('A','T'), ('T','A'), ('A','U'), ('U','A'))
             linestyle = :dash
         else
             linestyle = :dot
