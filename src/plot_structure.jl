@@ -177,9 +177,9 @@ function plot_structure_makie(
     for (i, j) in pairs
     	if linestyles == false
             linestyle = :solid
-	elseif (sequence[i], sequence[j]) in (('C','G'), ('G','C'))
+    	elseif (sequence[i], sequence[j]) in (('C','G'), ('G','C'))
             linestyle = :solid
-	elseif (sequence[i], sequence[j]) in (('A','T'), ('T','A'), ('A','U'), ('U','A'))
+    	elseif (sequence[i], sequence[j]) in (('A','T'), ('T','A'), ('A','U'), ('U','A'))
             linestyle = :dash
         else
             linestyle = :dot
