@@ -18,18 +18,23 @@ add https://github.com/marcom/PlotRNA.jl
 
 ## Usage
 
-```julia
-using PlotRNA, ViennaRNA
-```
-
 ### Built-in plotting functionality (basic at the moment)
 
 ```julia
+using PlotRNA
+
 # plot_structure: draw an image of a secondary structure
 dbn = "(((...)))"
 seq = "GGGAAACCC"
 plot_structure(dbn)
 plot_structure(dbn; savepath="rna.png")
+```
+
+```julia
+using PlotRNA
+using ViennaRNA: prob_of_basepairs
+
+# color bases according to their probability of being basepaired / unpaired
 plot_structure(dbn; sequence=seq, base_colors=prob_of_basepairs(seq, dbn))
 ```
 
@@ -38,13 +43,14 @@ looks a bit nicer but currently has a rather large time to first plot
 (40 seconds). Subsequent plots are very fast though.
 
 
-### Plotting structures with VARNA
+### Plot structures with VARNA
 
 This uses the very featureful [VARNA](https://varna.lri.fr/) program
 via its command-line interface.
 
 ```julia
 using PlotRNA
+
 VARNA.plot("(((...)))")
 VARNA.plot("(((...)))"; seq="GCGAAACGC", savepath="rna.png")
 VARNA.plot_compare(dbn1="(((.....)))", seq1="GCGAAAAACGC",
@@ -66,7 +72,7 @@ gets cleaned up by the Julia package manager when you uninstall
 PlotRNA.
 
 
-#### Plot options
+#### VARNA plot options
 
 More details about these parameters can be found in the [VARNA
 documentation](https://varna.lri.fr/index.php?lang=en&page=command&css=varna).
@@ -172,7 +178,8 @@ documentation](https://varna.lri.fr/index.php?lang=en&page=command&css=varna).
 - `zoom=1.0`
 
 
-## Other Julia packages for RNA secondary structure prediction
+## Related Julia packages for RNA secondary structure prediction
 
 - [ViennaRNA.jl](https://github.com/marcom/ViennaRNA.jl)
 - [LinearFold.jl](https://github.com/marcom/LinearFold.jl)
+- [FoldRNA.jl](https://github.com/marcom/FoldRNA.jl)
