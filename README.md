@@ -4,7 +4,8 @@ Plot nucleic acid secondary structures with Julia. The Julia
 implementation currently only provides very basic
 functionality. However, there is also an interface to the
 [VARNA](https://varna.lri.fr/) package which offers a lot of advanced
-features.
+features. If you use the VARNA interface in this package, please make
+sure to cite the VARNA paper as mentioned on its homepage.
 
 This package is quite new and there might be some sharp edges.
 
@@ -12,18 +13,21 @@ This package is quite new and there might be some sharp edges.
 
 PlotRNA is not yet registered in the Julia package registry. To install it, enter the package mode from the Julia REPL
 by pressing `]` and then install with
-```julia
+```
 add https://github.com/marcom/PlotRNA.jl
 ```
 
 ## Usage
 
+```julia
+using PlotRNA
+```
+
 ### Built-in plotting functionality (basic at the moment)
 
 ```julia
-using PlotRNA
-
 # plot_structure: draw an image of a secondary structure
+
 dbn = "(((...)))"
 seq = "GGGAAACCC"
 plot_structure(dbn)
@@ -31,10 +35,9 @@ plot_structure(dbn; savepath="rna.png")
 ```
 
 ```julia
-using PlotRNA
-using ViennaRNA: prob_of_basepairs
-
 # color bases according to their probability of being basepaired / unpaired
+
+using ViennaRNA: prob_of_basepairs
 plot_structure(dbn; sequence=seq, base_colors=prob_of_basepairs(seq, dbn))
 ```
 
@@ -177,6 +180,11 @@ documentation](https://varna.lri.fr/index.php?lang=en&page=command&css=varna).
 - `title_size=18`: title font size
 - `zoom=1.0`
 
+## Licensing
+
+All code in this repository is licensed under the MIT license, a copy
+of which can be found in the `LICENSE` file. VARNA is licensed under
+the GNU GPL as mentioned on the [VARNA homepage](https://varna.lri.fr/).
 
 ## Related Julia packages for RNA secondary structure prediction
 
