@@ -1,15 +1,19 @@
 # PlotRNA.jl
 
-Plot nucleic acid secondary structures with Julia. Currently only the
-most basic structure visualisation is implemented.
+Plot nucleic acid secondary structures with Julia. The Julia
+implementation currently only provides very basic
+functionality. However, there is also an interface to the
+[VARNA](https://varna.lri.fr/) package which offers a lot of advanced
+features.
 
 This package is quite new and there might be some sharp edges.
 
 ## Installation
 
-As PlotRNA is not yet registered you have to add it like this:
+PlotRNA is not yet registered in the Julia package registry. To install it, enter the package mode from the Julia REPL
+by pressing `]` and then install with
 ```julia
-] add https://github.com/marcom/PlotRNA.jl
+add https://github.com/marcom/PlotRNA.jl
 ```
 
 ## Usage
@@ -36,7 +40,7 @@ looks a bit nicer but currently has a rather large time to first plot
 
 ### Plotting structures with VARNA
 
-This uses the quite featureful [VARNA](https://varna.lri.fr/) program
+This uses the very featureful [VARNA](https://varna.lri.fr/) program
 via its command-line interface.
 
 ```julia
