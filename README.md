@@ -19,15 +19,14 @@ add https://github.com/marcom/PlotRNA.jl
 
 ## Usage
 
+### Built-in plotting functionality (basic at the moment)
+
 ```julia
 using PlotRNA
 ```
 
-### Built-in plotting functionality (basic at the moment)
-
 ```julia
 # plot_structure: draw an image of a secondary structure
-
 dbn = "(((...)))"
 seq = "GGGAAACCC"
 plot_structure(dbn)
@@ -35,10 +34,11 @@ plot_structure(dbn; savepath="rna.png")
 ```
 
 ```julia
-# color bases according to their probability of being basepaired / unpaired
-
+# color bases according to their probability of being basepaired or
+# unpaired
 using ViennaRNA: prob_of_basepairs
-plot_structure(dbn; sequence=seq, base_colors=prob_of_basepairs(seq, dbn))
+plot_structure(dbn; sequence=seq,
+                    base_colors=prob_of_basepairs(seq, dbn))
 ```
 
 There is also an experimental `PlotRNA.plot_structure_makie` which
