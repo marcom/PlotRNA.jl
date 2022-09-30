@@ -54,10 +54,10 @@ end
 
 const _docstr_save_verbose = """
 - `savepath=""`: path where the image should be saved. If set to `""`,
-  the image is stored in the temp directory.
-- `saveformat="svg"`: format of the output image. Only used if
-  `savepath` is empty, otherwise the file ending of `savepath`
-  determines the file format.
+  the image is stored in the temp directory. The file ending
+  determines the output file format.
+- `fileformat="svg"`: format of the output image. Only used if
+  `savepath` is empty.
 - `verbose=false`: output stdio from VARNA
 """
 
@@ -184,14 +184,14 @@ $_docstr_plot_opts
 function plot(dbn::AbstractString;
               seq::AbstractString=' '^length(dbn),
               savepath::AbstractString="",
-              saveformat::AbstractString="svg",
+              fileformat::AbstractString="svg",
               verbose::Bool=false,
               plot_opts...)
     varna_jarpath = _download_varna_jar()
     if length(dbn) != length(seq)
         throw(ArgumentError("structure and sequence must have same length: $(length(dbn)) != $(length(seq))"))
     end
-    outfile, mimetype = _common_savepath_mime(savepath, saveformat)
+    outfile, mimetype = _common_savepath_mime(savepath, fileformat)
     cmd = _common_varna_cmd(length(dbn); varna_jarpath, plot_opts...)
     cmd = `$cmd -o $outfile
                 -structureDBN $dbn
@@ -223,7 +223,7 @@ function plot_compare(; dbn1::AbstractString,
                       seq2::AbstractString,
                       gap_color::AbstractString="",
                       savepath::AbstractString="",
-                      saveformat::AbstractString="svg",
+                      fileformat::AbstractString="svg",
                       verbose::Bool=false,
                       plot_opts...)
     varna_jarpath = _download_varna_jar()
@@ -231,7 +231,7 @@ function plot_compare(; dbn1::AbstractString,
         throw(ArgumentError("all structures and sequences must have same length, here they are: " *
             "dbn1=$(length(dbn1)), seq1=$(length(seq1)), dbn2=$(length(dbn2)), seq2=$(length(seq2)))"))
     end
-    outfile, mimetype = _common_savepath_mime(savepath, saveformat)
+    outfile, mimetype = _common_savepath_mime(savepath, fileformat)
     cmd = _common_varna_cmd(length(dbn1); varna_jarpath, plot_opts...)
     cmd = `$cmd -o $outfile
                 -comparisonMode     true
@@ -391,11 +391,11 @@ function _common_run_cmd(cmd::Cmd, verbose::Bool)
 end
 
 # determine output file path and mime type
-function _common_savepath_mime(savepath, saveformat)
+function _common_savepath_mime(savepath, fileformat)
     if savepath == ""
         outdir = mktempdir()
-        outfile = joinpath(outdir, "out.$(saveformat)")
-        outending = saveformat
+        outfile = joinpath(outdir, "out.$(fileformat)")
+        outending = fileformat
     else
         outfile = savepath
         outending = split(basename(savepath), ".")[end]

@@ -26,8 +26,8 @@ const file_endings_to_mime = VARNA._map_fileendings_to_mime
             @test filesize(vp.filepath) > 0
         end
 
-        # saveformat
-        vp = plot("(((...)))"; seq="GCGAAACGC", saveformat=ending)
+        # fileformat
+        vp = plot("(((...)))"; seq="GCGAAACGC", fileformat=ending)
         @test vp isa VarnaPlot{mimetype}
         @test isfile(vp.filepath)
         @test filesize(vp.filepath) > 0
@@ -35,7 +35,7 @@ const file_endings_to_mime = VARNA._map_fileendings_to_mime
     end
 
     # illegal file endings / file formats
-    @test_throws ErrorException plot("(((...)))"; saveformat="doesnotexist")
+    @test_throws ErrorException plot("(((...)))"; fileformat="doesnotexist")
     mktempdir() do savedir
         savepath = joinpath(savedir, "out.doesnotexist")
         @test_throws ErrorException plot("(((...)))"; savepath)
@@ -64,10 +64,10 @@ end
             @test filesize(vp.filepath) > 0
         end
 
-        # saveformat
+        # fileformat
         vp = plot_compare(dbn1="(((.....)))", seq1="GCGAAAAACGC",
                           dbn2="((-...---))", seq2="GG-AAA---CC",
-                          saveformat=ending)
+                          fileformat=ending)
         @test vp isa VarnaPlot{mimetype}
         @test isfile(vp.filepath)
         @test filesize(vp.filepath) > 0
@@ -77,7 +77,7 @@ end
     # illegal file endings / file formats
     @test_throws ErrorException plot_compare(dbn1="(((.....)))", seq1="GCGAAAAACGC",
                                              dbn2="((-...---))", seq2="GG-AAA---CC",
-                                             saveformat="doesnotexist")
+                                             fileformat="doesnotexist")
     mktempdir() do savedir
         savepath = joinpath(savedir, "out.doesnotexist")
         @test_throws ErrorException plot_compare(dbn1="(((.....)))", seq1="GCGAAAAACGC",

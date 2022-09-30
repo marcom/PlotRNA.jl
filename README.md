@@ -83,7 +83,7 @@ PlotRNA.
   to, or a temporary file if not set. The file ending determines the
   output file type.
 
-- `saveformat="svg"`: output file format, only used if `savepath` is
+- `fileformat="svg"`: output file format, only used if `savepath` is
   not set.
 
 - `verbose=false`: print stdout and stderr captured from VARNA.
