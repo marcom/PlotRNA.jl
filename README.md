@@ -77,6 +77,19 @@ PlotRNA.
 
 #### VARNA plot options
 
+##### Basic options
+
+- `savepath=""`: output file path where the image should be written
+  to, or a temporary file if not set. The file ending determines the
+  output file type.
+
+- `saveformat="svg"`: output file format, only used if `savepath` is
+  not set.
+
+- `verbose=false`: print stdout and stderr captured from VARNA.
+
+##### VARNA options
+
 More details about these parameters can be found in the [VARNA
 documentation](https://varna.lri.fr/index.php?lang=en&page=command&css=varna).
 

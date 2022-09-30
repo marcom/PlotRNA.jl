@@ -1,34 +1,87 @@
-using PlotRNA: VARNA
+using PlotRNA.VARNA: VARNA, plot, plot_compare, VarnaPlot
+
+const file_endings_to_mime = VARNA._map_fileendings_to_mime
+
+# TODO
+# - test verbose option
 
 @testset "VARNA.plot" begin
-    outfile = VARNA.plot("(((...)))"; seq="GCGAAACGC")
-    @test outfile isa String
-    @test isfile(outfile)
-    # TODO: make sure there is something in the file
+    # basic usage
+    for kwargs in [(;), (; seq="GCGAAACGC")]
+        vp = plot("(((...)))"; kwargs...)
+        @test vp isa VarnaPlot
+        @test isfile(vp.filepath)
+        @test filesize(vp.filepath) > 0
+        rm(vp.filepath)
+    end
 
-    savedir = mktempdir()
-    savepath = joinpath(savedir, "out.png")
-    outfile = VARNA.plot("(((...)))"; seq="GCGAAACGC", savepath)
-    @test outfile isa String
-    @test outfile == savepath
-    @test isfile(savepath)
-    # TODO: make sure there is something in the file
+    for (ending, mimetype) in file_endings_to_mime
+        # savepath
+        mktempdir() do savedir
+            savepath = joinpath(savedir, "out.$ending")
+            vp = plot("(((...)))"; seq="GCGAAACGC", savepath)
+            @test vp isa VarnaPlot{mimetype}
+            @test vp.filepath == savepath
+            @test isfile(vp.filepath)
+            @test filesize(vp.filepath) > 0
+        end
+
+        # saveformat
+        vp = plot("(((...)))"; seq="GCGAAACGC", saveformat=ending)
+        @test vp isa VarnaPlot{mimetype}
+        @test isfile(vp.filepath)
+        @test filesize(vp.filepath) > 0
+        rm(vp.filepath)
+    end
+
+    # illegal file endings / file formats
+    @test_throws ErrorException plot("(((...)))"; saveformat="doesnotexist")
+    mktempdir() do savedir
+        savepath = joinpath(savedir, "out.doesnotexist")
+        @test_throws ErrorException plot("(((...)))"; savepath)
+    end
 end
 
 @testset "VARNA.plot_compare" begin
-    outfile = VARNA.plot_compare(dbn1="(((.....)))", seq1="GCGAAAAACGC",
-                                 dbn2="((-...---))", seq2="GG-AAA---CC")
-    @test outfile isa String
-    @test isfile(outfile)
-    # TODO: make sure there is something in the file
+    # basic usage
+    vp = plot_compare(dbn1="(((.....)))", seq1="GCGAAAAACGC",
+                      dbn2="((-...---))", seq2="GG-AAA---CC")
+    @test vp isa VarnaPlot
+    @test isfile(vp.filepath)
+    @test filesize(vp.filepath) > 0
+    rm(vp.filepath)
 
-    savedir = mktempdir()
-    savepath = joinpath(savedir, "out.png")
-    outfile = VARNA.plot_compare(dbn1="(((.....)))", seq1="GCGAAAAACGC",
-                                 dbn2="((-...---))", seq2="GG-AAA---CC";
-                                 savepath)
-    @test outfile isa String
-    @test outfile == savepath
-    @test isfile(savepath)
-    # TODO: make sure there is something in the file
+    for (ending, mimetype) in file_endings_to_mime
+        # savepath
+        mktempdir() do savedir
+            savepath = joinpath(savedir, "out.$ending")
+            vp = plot_compare(dbn1="(((.....)))", seq1="GCGAAAAACGC",
+                              dbn2="((-...---))", seq2="GG-AAA---CC",
+                              savepath=savepath)
+            @test vp isa VarnaPlot{mimetype}
+            @test vp.filepath == savepath
+            @test isfile(vp.filepath)
+            @test filesize(vp.filepath) > 0
+        end
+
+        # saveformat
+        vp = plot_compare(dbn1="(((.....)))", seq1="GCGAAAAACGC",
+                          dbn2="((-...---))", seq2="GG-AAA---CC",
+                          saveformat=ending)
+        @test vp isa VarnaPlot{mimetype}
+        @test isfile(vp.filepath)
+        @test filesize(vp.filepath) > 0
+        rm(vp.filepath)
+    end
+
+    # illegal file endings / file formats
+    @test_throws ErrorException plot_compare(dbn1="(((.....)))", seq1="GCGAAAAACGC",
+                                             dbn2="((-...---))", seq2="GG-AAA---CC",
+                                             saveformat="doesnotexist")
+    mktempdir() do savedir
+        savepath = joinpath(savedir, "out.doesnotexist")
+        @test_throws ErrorException plot_compare(dbn1="(((.....)))", seq1="GCGAAAAACGC",
+                                                 dbn2="((-...---))", seq2="GG-AAA---CC",
+                                                 savepath=savepath)
+    end
 end

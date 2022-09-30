@@ -25,12 +25,43 @@ function _download_varna_jar(url=_download_url)
     return fname
 end
 
-const docstr_savepath = """
+# VARNA-3.93 supported formats: JPEG,PNG,EPS,XFIG,SVG
+const _map_fileendings_to_mime = Dict(
+    "jpg"  => MIME"image/jpeg",
+    "jpeg" => MIME"image/jpeg",
+    "png"  => MIME"image/png",
+    "eps"  => MIME"application/postscript",
+    "fig"  => MIME"application/x-xfig",
+    "xfig" => MIME"application/x-xfig",
+    "svg"  => MIME"image/svg+xml",
+)
+
+struct VarnaPlot{T <: MIME}
+    filepath :: String
+end
+
+function Base.showable(mime::Type{Tmime}, p::VarnaPlot{Tvp}) where {Tvp, Tmime <: MIME}
+    if mime === Tvp
+        return true
+    end
+    return false
+end
+
+function Base.show(io::IO, mime::T, p::VarnaPlot{T}) where {T <: MIME}
+    write(io, read(p.filepath))
+end
+
+
+const _docstr_save_verbose = """
 - `savepath=""`: path where the image should be saved. If set to `""`,
   the image is stored in the temp directory.
+- `saveformat="svg"`: format of the output image. Only used if
+  `savepath` is empty, otherwise the file ending of `savepath`
+  determines the file format.
+- `verbose=false`: output stdio from VARNA
 """
 
-const docstr_plot_opts = """
+const _docstr_plot_opts = """
 #### Plot options
 
 More details about these parameters can be found in the [VARNA
@@ -146,30 +177,27 @@ VARNA. Pseudoknotted structures are allowed here.
 
 Keyword arguments
 - `seq=""`: sequence of the RNA, must have same length as structure
-$docstr_savepath
+$_docstr_save_verbose
 
-$docstr_plot_opts
+$_docstr_plot_opts
 """
 function plot(dbn::AbstractString;
               seq::AbstractString=' '^length(dbn),
               savepath::AbstractString="",
+              saveformat::AbstractString="svg",
+              verbose::Bool=false,
               plot_opts...)
     varna_jarpath = _download_varna_jar()
     if length(dbn) != length(seq)
         throw(ArgumentError("structure and sequence must have same length: $(length(dbn)) != $(length(seq))"))
     end
-    if savepath == ""
-        outdir = mktempdir()
-        outfile = joinpath(outdir, "out.png")
-    else
-        outfile = savepath
-    end
-    cmd = _cmd_varna_common(length(dbn); varna_jarpath, plot_opts...)
+    outfile, mimetype = _common_savepath_mime(savepath, saveformat)
+    cmd = _common_varna_cmd(length(dbn); varna_jarpath, plot_opts...)
     cmd = `$cmd -o $outfile
                 -structureDBN $dbn
                 -sequenceDBN $seq`
-    run(cmd)
-    return outfile
+    _common_run_cmd(cmd, verbose)
+    return VarnaPlot{mimetype}(outfile)
 end
 
 """
@@ -185,9 +213,9 @@ Comparative mode options
 - `seq1: sequence of first RNA
 - `seq2`: sequence of second RNA, same length as `seq1`
 - `gap_color=""`
-$docstr_savepath
+$_docstr_save_verbose
 
-$docstr_plot_opts
+$_docstr_plot_opts
 """
 function plot_compare(; dbn1::AbstractString,
                       dbn2::AbstractString,
@@ -195,19 +223,16 @@ function plot_compare(; dbn1::AbstractString,
                       seq2::AbstractString,
                       gap_color::AbstractString="",
                       savepath::AbstractString="",
+                      saveformat::AbstractString="svg",
+                      verbose::Bool=false,
                       plot_opts...)
     varna_jarpath = _download_varna_jar()
     if length(dbn1) != length(dbn2) || length(dbn1) != length(seq1) || length(dbn1) != length(seq2)
         throw(ArgumentError("all structures and sequences must have same length, here they are: " *
             "dbn1=$(length(dbn1)), seq1=$(length(seq1)), dbn2=$(length(dbn2)), seq2=$(length(seq2)))"))
     end
-    if savepath == ""
-        outdir = mktempdir()
-        outfile = joinpath(outdir, "out.png")
-    else
-        outfile = savepath
-    end
-    cmd = _cmd_varna_common(length(dbn1); varna_jarpath, plot_opts...)
+    outfile, mimetype = _common_savepath_mime(savepath, saveformat)
+    cmd = _common_varna_cmd(length(dbn1); varna_jarpath, plot_opts...)
     cmd = `$cmd -o $outfile
                 -comparisonMode     true
                 -firstStructure     $dbn1
@@ -215,13 +240,13 @@ function plot_compare(; dbn1::AbstractString,
                 -secondStructure    $dbn2
                 -secondSequence     $seq2
                 -gapsColor          $gap_color`
-    run(cmd)
-    return outfile
+    _common_run_cmd(cmd, verbose)
+    return VarnaPlot{mimetype}(outfile)
 end
 
 # create Cmd string prefix common to the VARNA plot functions,
 # i.e. `java ...`
-function _cmd_varna_common(len_struct::Integer;
+function _common_varna_cmd(len_struct::Integer;
     varna_jarpath::AbstractString,
     algorithm::Symbol=:radiate,
     additional_basepairs::AbstractString="",
@@ -346,6 +371,42 @@ function _cmd_varna_common(len_struct::Integer;
                     -colorMapMax        $(float(color_map_max))`
     end
     return cmd
+end
+
+# run Cmd, collecting stdin and stderr
+function _common_run_cmd(cmd::Cmd, verbose::Bool)
+    outbuf = IOBuffer()
+    errbuf = IOBuffer()
+    r = run(pipeline(ignorestatus(cmd); stdin=devnull, stdout=outbuf, stderr=errbuf))
+    out = String(take!(outbuf))
+    err = String(take!(errbuf))
+    if verbose || r.exitcode != 0
+        println("VARNA output:")
+        println(out)
+        println(err)
+    end
+    if r.exitcode != 0
+        error("failed running command: $cmd")
+    end
+end
+
+# determine output file path and mime type
+function _common_savepath_mime(savepath, saveformat)
+    if savepath == ""
+        outdir = mktempdir()
+        outfile = joinpath(outdir, "out.$(saveformat)")
+        outending = saveformat
+    else
+        outfile = savepath
+        outending = split(basename(savepath), ".")[end]
+    end
+    mimetype = try
+        _map_fileendings_to_mime[lowercase(outending)]
+    catch
+        error("file format $outending not recognised." *
+            " If you know that VARNA can actually produce output in this format, please file a bug report.")
+    end
+    return outfile, mimetype
 end
 
 end # module VARNA
