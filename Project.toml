@@ -1,7 +1,7 @@
 name = "PlotRNA"
 uuid = "eab79ae3-43af-4078-b4a3-b180fd2797a7"
 authors = ["Marco Matthies <marco.matthies@gmail.com>"]
-version = "0.1.0"
+version = "0.1.1"
 
 [deps]
 CairoMakie = "13f3f980-e62b-5c42-98c6-ff1f3baf88f0"
