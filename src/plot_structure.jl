@@ -1,8 +1,8 @@
 using Statistics: mean
 using ColorSchemes: ColorScheme, colorschemes
 using Luxor: Luxor, @draw, background, circle, fontsize, line, Point, sethue, text
-using CairoMakie: Makie, Axis, Colorbar, DataAspect, Figure,
-    hidedecorations!, hidespines!, lines!, scatterlines!, text!,
+using CairoMakie: Makie, Axis, Colorbar, ColorTypes, DataAspect, Figure,
+    hidedecorations!, hidespines!, lines!, scatter!, text!,
     xlims!, ylims!
 using ViennaRNA: FoldCompound, Pairtable, basepairs, partfn, plot_coords, prob_of_basepairs
 
@@ -192,13 +192,15 @@ function plot_structure_makie(
             linewidth = 0.8,
         )
     end
-    scatterlines!(ax, x_coords, y_coords,
-        markersize = markersize,
-        markercolor = prob_of_basepairs(fc, pt),
-        markercolormap = colorscheme,
-        markercolorrange = (0, 1), # probabilities [0, 1]
-        linewidth = 3,
-    )
+    lines!(ax, x_coords, y_coords;
+           linewidth = 3)
+    scatter!(ax, x_coords, y_coords;
+             markersize = markersize,
+             color = prob_of_basepairs(fc, pt),
+             colormap = colorscheme,
+             colorrange = (0, 1), # probabilities [0, 1]
+             )
+
     text!(string.(collect(sequence)),
         position = positions,
         align = (:center, :center),
