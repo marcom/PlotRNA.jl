@@ -202,5 +202,6 @@ the GNU GPL as mentioned on the [VARNA homepage](https://varna.lri.fr/).
 ## Related Julia packages for RNA secondary structure prediction
 
 - [ViennaRNA.jl](https://github.com/marcom/ViennaRNA.jl)
+- [RNAstructure.jl](https://github.com/marcom/RNAstructure.jl)
 - [LinearFold.jl](https://github.com/marcom/LinearFold.jl)
 - [FoldRNA.jl](https://github.com/marcom/FoldRNA.jl)
