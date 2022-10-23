@@ -22,3 +22,11 @@ Scratch = "1.1"
 SnoopPrecompile = "1"
 ViennaRNA = "0.8"
 julia = "1.6"
+
+[extras]
+BioStockholm = "eeb925a3-6f9d-43e6-829e-e0ea03b76ecf"
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+ViennaRNA = "05a721ad-238d-4945-8c85-8b5c1fff3465"
+
+[targets]
+test = ["BioStockholm", "Test", "ViennaRNA"]
