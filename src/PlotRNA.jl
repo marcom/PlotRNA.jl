@@ -6,6 +6,7 @@ export VARNA, plot_structure
 
 include("plot_structure.jl")
 include("varna.jl")
+include("r2r.jl")
 
 @precompile_all_calls begin
     plot_structure("(((...)))")

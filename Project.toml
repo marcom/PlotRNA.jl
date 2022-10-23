@@ -4,9 +4,11 @@ authors = ["Marco Matthies <marco.matthies@gmail.com>"]
 version = "0.1.2"
 
 [deps]
+BioStockholm = "eeb925a3-6f9d-43e6-829e-e0ea03b76ecf"
 CairoMakie = "13f3f980-e62b-5c42-98c6-ff1f3baf88f0"
 ColorSchemes = "35d6a980-a343-548e-a6ea-1d62b119f2f4"
 Luxor = "ae8d54c2-7ccd-5906-9d76-62fc9837b5bc"
+R2R_jll = "1e27f72a-4876-5c10-8678-3341fdb8ba55"
 Scratch = "6c6a2e73-6563-6170-7368-637461726353"
 SnoopPrecompile = "66db9d55-30c0-4569-8b51-7e840670fc0c"
 Statistics = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
