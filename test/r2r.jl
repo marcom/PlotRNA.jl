@@ -1,7 +1,7 @@
 using Test
 using PlotRNA: R2R
 using BioStockholm: MSA
-using PlotRNA.R2R: R2R, R2Rplot
+using PlotRNA.R2R: R2Rplot
 
 const R2R_MSA = [
 parse(MSA,
