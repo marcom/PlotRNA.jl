@@ -71,11 +71,6 @@
 # - <path_to_sto_file> oneseq <seq_id>
 
 
-# TODO
-# - meaning of GSC-weighted-consensus ?
-# - identity-levels: "nucleotide identity" ? site index or base type?
-#   (assumed to be per-site)
-
 module R2R
 
 using BioStockholm: MSA
@@ -89,6 +84,30 @@ function _runcmd(cmd::Cmd)
     out = String(take!(buf_out))
     err = String(take!(buf_err))
     return exitcode, out, err
+end
+
+struct R2Rplot
+    svg::String
+end
+
+function Base.showable(mime::Type{T}, p::R2Rplot) where {T <: MIME}
+    if mime === MIME"image/svg+xml"
+        return true
+    end
+    return false
+end
+
+function Base.show(io::IO, mime::MIME"image/svg+xml", p::R2Rplot)
+    # TODO: why doesn't the following signature work? claims there is
+    #       no method to call for MIME"image/svg+xml", but
+    #       MIME"image/svg+xml" <: MIME ???
+    # function Base.show(io::IO, mime::T, p::R2Rplot) where {T <: MIME}
+    println(io, p.svg)
+end
+
+function plot(msa::MSA; kwargs...)
+    ps, res, out, err = r2r(msa; kwargs...)
+    return R2Rplot(res)
 end
 
 function r2r(msa::MSA;

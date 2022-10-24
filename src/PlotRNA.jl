@@ -2,7 +2,7 @@ module PlotRNA
 
 using SnoopPrecompile: @precompile_all_calls
 
-export VARNA, plot_structure
+export VARNA, R2R, plot_structure
 
 include("plot_structure.jl")
 include("varna.jl")
