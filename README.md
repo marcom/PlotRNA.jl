@@ -43,7 +43,11 @@ plot_structure(dbn; sequence=seq,
 
 There is also an experimental `PlotRNA.plot_structure_makie` which
 looks a bit nicer but currently has a rather large time to first plot
-(40 seconds). Subsequent plots are very fast though.
+(28 seconds). Subsequent plots are very fast though. To use this
+function, you must load CairoMakie before PlotRNA: `using CairoMakie,
+PlotRNA` (code using CairoMakie is only loaded optionally with
+Requires.jl, as otherwise PlotRNA's package load time is a lot
+higher).
 
 
 ### Plot structures with VARNA
