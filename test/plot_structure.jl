@@ -1,5 +1,5 @@
 using PlotRNA
-using PlotRNA: Luxor, Makie
+using PlotRNA: Luxor
 using ViennaRNA: Pairtable
 
 # TODO: simplify tests
@@ -26,10 +26,4 @@ using ViennaRNA: Pairtable
                              base_colors=rand(length(w)), savepath) isa Luxor.Drawing
         @test isfile(savepath)
     end
-end
-
-@testset "plot_structure_makie" begin
-    w = "((((.....))))."
-    s = "GGCGAAUACCGCCU"
-    @test PlotRNA.plot_structure_makie(w) isa Makie.Figure
 end
