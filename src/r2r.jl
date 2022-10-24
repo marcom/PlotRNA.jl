@@ -91,11 +91,11 @@ function _runcmd(cmd::Cmd)
     return exitcode, out, err
 end
 
-function _run_r2r(msa::MSA;
-                  GSC_weighted_consensus::Bool = true,
-                  identity_levels = [0.97, 0.9, 0.75],
-                  present_levels = [0.97, 0.9, 0.75, 0.5],
-                  max_noncanon::Real = 0.1)
+function r2r(msa::MSA;
+             GSC_weighted_consensus::Bool = true,
+             identity_levels = [0.97, 0.9, 0.75],
+             present_levels = [0.97, 0.9, 0.75, 0.5],
+             max_noncanon::Real = 0.1)
     # TODO
     # - output file type: svg or pdf
     # - assertions on identity_levels, present_levels, max_noncanon
