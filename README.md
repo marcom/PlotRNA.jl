@@ -14,7 +14,7 @@ This package is quite new and there might be some sharp edges.
 Enter the package mode from the Julia REPL by pressing `]` and then
 install with
 ```
-add https://github.com/marcom/PlotRNA.jl
+add PlotRNA
 ```
 
 ## Usage
