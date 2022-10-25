@@ -7,7 +7,6 @@ functionality. However, there is also an interface to the
 features. If you use the VARNA interface in this package, please make
 sure to cite the VARNA paper as mentioned on its homepage.
 
-This package is quite new and there might be some sharp edges.
 
 ## Installation
 
