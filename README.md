@@ -11,8 +11,8 @@ This package is quite new and there might be some sharp edges.
 
 ## Installation
 
-PlotRNA is not yet registered in the Julia package registry. To install it, enter the package mode from the Julia REPL
-by pressing `]` and then install with
+Enter the package mode from the Julia REPL by pressing `]` and then
+install with
 ```
 add https://github.com/marcom/PlotRNA.jl
 ```
