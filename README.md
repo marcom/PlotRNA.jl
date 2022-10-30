@@ -196,6 +196,31 @@ documentation](https://varna.lri.fr/index.php?lang=en&page=command&css=varna).
 - `title_size=18`: title font size
 - `zoom=1.0`
 
+### Plot structures with R2R
+
+This uses the
+[R2R](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-12-3)
+program via its command-line interface.
+
+``julia
+using PlotRNA, BioStockholm
+msa = parse(MSA, """
+# STOCKHOLM 1.0
+human        ACACGCGAAA.GCGCAA.CAAACGUGCACGG
+chimp        GAAUGUGAAAAACACCA.CUCUUGAGGACCU
+bigfoot      UUGAG.UUCG..CUCGUUUUCUCGAGUACAC
+#=GC SS_cons ...<<<.....>>>....<<....>>.....
+//
+""")
+
+# this should show a svg image in Pluto or Jupyter
+plot = R2R.plot(msa)
+
+# save the svg image to a file
+write("out.svg", plot.svg)
+```
+
+
 ## Licensing
 
 All code in this repository is licensed under the MIT license, a copy
