@@ -2,10 +2,14 @@
 
 Plot nucleic acid secondary structures with Julia. The Julia
 implementation currently only provides very basic
-functionality. However, there is also an interface to the
-[VARNA](https://varna.lri.fr/) package which offers a lot of advanced
-features. If you use the VARNA interface in this package, please make
-sure to cite the VARNA paper as mentioned on its homepage.
+functionality.
+
+There is also an interface to the [VARNA](https://varna.lri.fr/)
+package which offers a lot of advanced features, and an interface to
+[R2R](https://zashaweinberglab.org/research/) for plotting multiple
+sequence alignments with consensus structures. If you use the VARNA or
+R2R interface in this package, please make sure to cite the
+corresponding VARNA or R2R publication.
 
 
 ## Installation
@@ -225,7 +229,8 @@ write("out.svg", plot.svg)
 
 All code in this repository is licensed under the MIT license, a copy
 of which can be found in the `LICENSE` file. VARNA is licensed under
-the GNU GPL as mentioned on the [VARNA homepage](https://varna.lri.fr/).
+the GNU GPL as mentioned on the [VARNA
+homepage](https://varna.lri.fr/). R2R is licensed under the GNU GPL.
 
 ## Related Julia packages for RNA secondary structure prediction
 
