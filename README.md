@@ -202,7 +202,7 @@ This uses the
 [R2R](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-12-3)
 program via its command-line interface.
 
-``julia
+```julia
 using PlotRNA, BioStockholm
 msa = parse(MSA, """
 # STOCKHOLM 1.0
