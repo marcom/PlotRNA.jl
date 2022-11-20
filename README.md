@@ -209,13 +209,21 @@ program via its command-line interface.
 ```julia
 using PlotRNA, BioStockholm
 msa = parse(MSA, """
-# STOCKHOLM 1.0
-human        ACACGCGAAA.GCGCAA.CAAACGUGCACGG
-chimp        GAAUGUGAAAAACACCA.CUCUUGAGGACCU
-bigfoot      UUGAG.UUCG..CUCGUUUUCUCGAGUACAC
-#=GC SS_cons ...<<<.....>>>....<<....>>.....
-//
-""")
+    # STOCKHOLM 1.0
+    human        ACACGCGAAA.GCGCAA.CAAACGUGCACGG
+    chimp        GAAUGUGAAAAACACCA.CUCUUGAGGACCU
+    bigfoot      UUGAG.UUCG..CUCGUUUUCUCGAGUACAC
+    #=GC SS_cons ...<<<.....>>>....<<....>>.....
+    //
+    """)
+
+# or alternatively
+msa = MSA{Char}(;
+    seq = Dict("human"   => "ACACGCGAAA.GCGCAA.CAAACGUGCACGG",
+               "chimp"   => "GAAUGUGAAAAACACCA.CUCUUGAGGACCU",
+               "bigfoot" => "UUGAG.UUCG..CUCGUUUUCUCGAGUACAC"),
+     GC = Dict("SS_cons" => "...<<<.....>>>....<<....>>.....")
+)
 
 # this should show a svg image in Pluto or Jupyter
 plot = R2R.plot(msa)
