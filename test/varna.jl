@@ -6,6 +6,7 @@ const file_endings_to_mime = VARNA._map_fileendings_to_mime
 # - test verbose option
 
 @testset "VARNA.plot" begin
+    showtestset()
     # basic usage
     for kwargs in [(;), (; seq="GCGAAACGC")]
         vp = VARNA.plot("(((...)))"; kwargs...)
@@ -43,6 +44,7 @@ const file_endings_to_mime = VARNA._map_fileendings_to_mime
 end
 
 @testset "VARNA.plot_compare" begin
+    showtestset()
     # basic usage
     vp = VARNA.plot_compare(dbn1="(((.....)))", seq1="GCGAAAAACGC",
                             dbn2="((-...---))", seq2="GG-AAA---CC")

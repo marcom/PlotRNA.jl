@@ -18,6 +18,7 @@ MSA{Char}(; seq = Dict("a" => "GAAAC", "b" => "UAAAA"),
 ]
 
 @testset "R2R.r2r" begin
+    showtestset()
     Tres = Tuple{Int, String, String, String}
     for msa in R2R_MSA
         @test R2R.r2r(msa) isa Tres
@@ -25,6 +26,7 @@ MSA{Char}(; seq = Dict("a" => "GAAAC", "b" => "UAAAA"),
 end
 
 @testset "R2R.plot" begin
+    showtestset()
     Tres = R2Rplot
     for msa in R2R_MSA
         @test R2R.plot(msa) isa Tres

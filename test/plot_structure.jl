@@ -4,6 +4,7 @@ using ViennaRNA: Pairtable
 
 # TODO: simplify tests
 @testset "plot_structure" begin
+    showtestset()
     w = "((((.....))))."
     s = "GGCGAAUACCGCCU"
     @test plot_structure(w) isa Luxor.Drawing
