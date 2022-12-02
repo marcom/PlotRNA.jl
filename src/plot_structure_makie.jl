@@ -4,11 +4,6 @@ using .CairoMakie: Makie, Axis, Colorbar, ColorTypes, DataAspect, Figure,
     hidedecorations!, hidespines!, lines!, scatter!, text!,
     xlims!, ylims!
 
-"""
-    plot_structure_makie(structure; [sequence, savepath, layout_type, colorscheme])
-
-Plot a secondary structure to a PNG image or PDF file depending on `savepath` ending.
-"""
 function plot_structure_makie(
     structure::AbstractString;
     sequence::AbstractString=" "^length(structure),

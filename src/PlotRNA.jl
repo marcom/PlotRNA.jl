@@ -22,4 +22,17 @@ include("r2r.jl")
     #plot_structure_makie("(((...)))"; sequence="GGGAAACCC")
 end
 
+# We define the docstring of plot_structure_makie here so it's always
+# available, even if the plot_structure_makie implementation wasn't
+# included because CairoMakie was not loaded.
+"""
+    plot_structure_makie(structure; [sequence, savepath, layout_type, colorscheme])
+
+Plot a secondary structure to a PNG image or PDF file depending on `savepath` ending.
+
+Using this function requires CairoMakie to have been loaded before
+PlotRNA with `using CairoMakie, PlotRNA`.
+"""
+function plot_structure_makie end
+
 end # module PlotRNA
