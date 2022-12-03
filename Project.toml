@@ -17,7 +17,7 @@ ViennaRNA = "05a721ad-238d-4945-8c85-8b5c1fff3465"
 
 [compat]
 BioStockholm = "0.1"
-CairoMakie = "0.9"
+CairoMakie = "0.10"
 ColorSchemes = "3.18"
 Luxor = "3.3"
 R2R_jll = "=1.0.6"

@@ -62,7 +62,7 @@ function plot_structure_makie(
     text!(string.(collect(sequence)),
         position = positions,
         align = (:center, :center),
-        textsize = markersize / 2,
+        fontsize = markersize / 2,
     )
     Colorbar(
         f[2, 1],
