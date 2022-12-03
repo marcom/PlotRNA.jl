@@ -86,35 +86,35 @@ function _runcmd(cmd::Cmd)
     return exitcode, out, err
 end
 
-struct R2Rplot
+struct Plot
     svg::String
 end
 
-function Base.showable(mime::Type{T}, p::R2Rplot) where {T <: MIME}
+function Base.showable(mime::Type{T}, p::Plot) where {T <: MIME}
     if mime === MIME"image/svg+xml"
         return true
     end
     return false
 end
 
-function Base.show(io::IO, mime::MIME"image/svg+xml", p::R2Rplot)
+function Base.show(io::IO, mime::MIME"image/svg+xml", p::Plot)
     # TODO: why doesn't the following signature work? claims there is
     #       no method to call for MIME"image/svg+xml", but
     #       MIME"image/svg+xml" <: MIME ???
-    # function Base.show(io::IO, mime::T, p::R2Rplot) where {T <: MIME}
+    # function Base.show(io::IO, mime::T, p::Plot) where {T <: MIME}
     println(io, p.svg)
 end
 
 function plot(msa::MSA; kwargs...)
-    ps, res, out, err = r2r(msa; kwargs...)
-    return R2Rplot(res)
+    ps, res, out, err = run_r2r(msa; kwargs...)
+    return Plot(res)
 end
 
-function r2r(msa::MSA;
-             GSC_weighted_consensus::Bool = true,
-             identity_levels = [0.97, 0.9, 0.75],
-             present_levels = [0.97, 0.9, 0.75, 0.5],
-             max_noncanon::Real = 0.1)
+function run_r2r(msa::MSA;
+                 GSC_weighted_consensus::Bool = true,
+                 identity_levels = [0.97, 0.9, 0.75],
+                 present_levels = [0.97, 0.9, 0.75, 0.5],
+                 max_noncanon::Real = 0.1)
     # TODO
     # - output file type: svg or pdf
     # - assertions on identity_levels, present_levels, max_noncanon
