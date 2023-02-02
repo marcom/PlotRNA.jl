@@ -20,6 +20,9 @@ install with
 add PlotRNA
 ```
 
+Please excuse the rather long compile times on installation (around 5
+minutes on julia-1.9).
+
 ## Usage
 
 ### Built-in plotting functionality (basic at the moment)
@@ -46,10 +49,12 @@ plot_structure(dbn; sequence=seq,
 
 There is also an experimental `PlotRNA.plot_structure_makie` which
 looks a bit nicer but currently has a rather large time to first plot
-(about 30 seconds). Subsequent plots are very fast though. To use this
-function, you must load CairoMakie before PlotRNA. Code using
-CairoMakie is only loaded optionally with Requires.jl, as otherwise
-PlotRNA's package load time is a lot higher.
+(on julia-1.9: about 10 seconds for `using CairoMakie, PlotRNA` and 10
+seconds for `PlotRNA.plot_structure_makie("(((...)))")`). Subsequent
+plots are very fast though. To use this function, you must load
+CairoMakie before PlotRNA. Code using CairoMakie is only loaded
+optionally with Requires.jl, as otherwise PlotRNA's package load time
+is a lot higher.
 
 ```julia
 using CairoMakie, PlotRNA
