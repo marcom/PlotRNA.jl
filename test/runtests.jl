@@ -9,5 +9,6 @@ showtestset() = println(" "^(2 * Test.get_testset_depth()), "testing ",
     include("plot_structure.jl")
     include("varna.jl")
     include("r2r.jl")
+    include("uniplot.jl")
     include("plot_structure_makie.jl")
 end

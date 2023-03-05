@@ -61,6 +61,15 @@ using CairoMakie, PlotRNA
 PlotRNA.plot_structure_makie("(((...)))")
 ```
 
+### Terminal plotting with UnicodePlots
+
+Plotting in the terminal is supported via UnicodePlots.
+
+```julia
+using UnicodePlots, PlotRNA
+PlotRNA.uniplot("(((...)))")
+```
+
 
 ### Plot structures with VARNA
 
