@@ -269,7 +269,9 @@ homepage](https://varna.lri.fr/). R2R is licensed under the GNU GPL.
 
 ## Related Julia packages for RNA secondary structure prediction
 
-- [ViennaRNA.jl](https://github.com/marcom/ViennaRNA.jl)
-- [RNAstructure.jl](https://github.com/marcom/RNAstructure.jl)
-- [LinearFold.jl](https://github.com/marcom/LinearFold.jl)
 - [FoldRNA.jl](https://github.com/marcom/FoldRNA.jl)
+- [Infernal.jl](https://github.com/cossio/Infernal.jl)
+- [LinearFold.jl](https://github.com/marcom/LinearFold.jl)
+- [Rfam.jl](https://github.com/cossio/Rfam.jl)
+- [RNAstructure.jl](https://github.com/marcom/RNAstructure.jl)
+- [ViennaRNA.jl](https://github.com/marcom/ViennaRNA.jl)
