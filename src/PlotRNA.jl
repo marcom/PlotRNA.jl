@@ -1,6 +1,6 @@
 module PlotRNA
 
-using SnoopPrecompile: @precompile_all_calls
+using PrecompileTools: @compile_workload
 using Requires: @require
 
 export VARNA, R2R, plot_structure
@@ -14,7 +14,7 @@ include("plot_structure.jl")
 include("varna.jl")
 include("r2r.jl")
 
-@precompile_all_calls begin
+@compile_workload begin
     plot_structure("(((...)))")
     plot_structure("(((...)))"; sequence="GGGAAACCC")
     # TODO: how to precompile but using @require from Requires.jl?
