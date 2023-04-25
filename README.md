@@ -5,7 +5,8 @@ Plot nucleic acid secondary structures with Julia.
 There are currently four different backends:
 
 - `plot_structure`, `plot_structure_makie`: basic plotting implemented
-  in Julia using `Luxor` or `CairoMakie` respectively
+  in Julia using `Luxor` or `CairoMakie` respectively. These functions
+  use `ViennaRNA` behind the scenes to generate the coordinates
 - `PlotRNA.uniplot`: basic text-mode plotting in the terminal using
   `UnicodePlots`
 - `VARNA.plot`, `VARNA.plot_compare`: uses the
