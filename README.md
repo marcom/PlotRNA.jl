@@ -1,16 +1,26 @@
 # PlotRNA.jl
 
-Plot nucleic acid secondary structures with Julia. The Julia
-implementation currently only provides very basic
-functionality.
+Plot nucleic acid secondary structures with Julia.
 
-There is also an interface to the [VARNA](https://varna.lri.fr/)
-package which offers a lot of advanced features, and an interface to
-[R2R](https://zashaweinberglab.org/research/) for plotting multiple
-sequence alignments with consensus structures. If you use the VARNA or
-R2R interface in this package, please make sure to cite the
-corresponding VARNA or R2R publication.
+There are currently four different backends:
 
+- `plot_structure`, `plot_structure_makie`: basic plotting implemented
+  in Julia using `Luxor` or `CairoMakie` respectively
+- `PlotRNA.uniplot`: basic text-mode plotting in the terminal using
+  `UnicodePlots`
+- `VARNA.plot`, `VARNA.plot_compare`: uses the
+  [VARNA](https://varna.lri.fr/) package implemented in Java, offering
+  advanced features
+- `R2R.plot`: uses [R2R](https://zashaweinberglab.org/research/) for
+  plotting multiple sequence alignments with consensus structures
+
+If you use the VARNA or R2R interface in this package, please make
+sure to cite the corresponding VARNA or R2R publication.
+
+Note: to use `plot_structure_makie`, `CairoMakie` must be loaded
+before `PlotRNA`. To use `PlotRNA.uniplot`, `UnicodePlots` must be
+loaded before loading `PlotRNA`. This is to reduce the loading time of
+this package if these features are not used. See below for details.
 
 ## Installation
 
