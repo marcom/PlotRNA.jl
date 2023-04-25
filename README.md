@@ -278,7 +278,7 @@ of which can be found in the `LICENSE` file. VARNA is licensed under
 the GNU GPL as mentioned on the [VARNA
 homepage](https://varna.lri.fr/). R2R is licensed under the GNU GPL.
 
-## Related Julia packages for RNA secondary structure prediction
+## Related Julia packages for RNA secondary structures
 
 - [FoldRNA.jl](https://github.com/marcom/FoldRNA.jl)
 - [Infernal.jl](https://github.com/cossio/Infernal.jl)
