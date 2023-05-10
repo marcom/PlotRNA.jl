@@ -1,10 +1,20 @@
-# Note: we have to use the dot before CairoMakie as we are using
-# Requires.jl to only compile this code if CairoMakie is available
-using .CairoMakie: Makie, Axis, Colorbar, ColorTypes, DataAspect, Figure,
-    hidedecorations!, hidespines!, lines!, scatter!, text!,
-    xlims!, ylims!
+module CairoMakieExt
 
-function plot_structure_makie(
+using PrecompileTools: @compile_workload
+using PlotRNA
+using ViennaRNA: FoldCompound, Pairtable, basepairs, partfn, plot_coords, prob_of_basepairs
+if isdefined(Base, :get_extension)
+    using CairoMakie: Makie, Axis, Colorbar, ColorTypes, DataAspect,
+                      Figure, hidedecorations!, hidespines!, lines!,
+                      scatter!, text!, xlims!, ylims!
+else
+    using ..CairoMakie: Makie, Axis, Colorbar, ColorTypes, DataAspect,
+                        Figure, hidedecorations!, hidespines!, lines!,
+                        scatter!, text!, xlims!, ylims!
+end
+
+# Note: docstring is in src/PlotRNA.jl
+function PlotRNA.plot_structure_makie(
     structure::AbstractString;
     sequence::AbstractString=" "^length(structure),
     savepath::String = "",
@@ -77,3 +87,10 @@ function plot_structure_makie(
     end
     return f
 end
+
+@compile_workload begin
+    PlotRNA.plot_structure_makie("(((...)))")
+    PlotRNA.plot_structure_makie("(((...)))"; sequence="GGGAAACCC")
+end
+
+end # module
