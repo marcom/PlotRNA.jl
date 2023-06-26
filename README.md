@@ -1,5 +1,7 @@
 # PlotRNA.jl
 
+[![Build Status](https://github.com/marcom/PlotRNA.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/marcom/PlotRNA.jl/actions/workflows/CI.yml?query=branch%3Amain)
+
 Plot nucleic acid secondary structures with Julia.
 
 There are currently four different backends:
