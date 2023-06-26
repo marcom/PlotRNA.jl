@@ -1,6 +1,7 @@
 # PlotRNA.jl
 
 [![Build Status](https://github.com/marcom/PlotRNA.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/marcom/PlotRNA.jl/actions/workflows/CI.yml?query=branch%3Amain)
+[![Aqua QA](https://raw.githubusercontent.com/JuliaTesting/Aqua.jl/master/badge.svg)](https://github.com/JuliaTesting/Aqua.jl)
 
 Plot nucleic acid secondary structures with Julia.
 
