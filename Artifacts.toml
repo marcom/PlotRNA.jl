@@ -1,0 +1,7 @@
+[VARNAv3-93_jar]
+git-tree-sha1 = "7141dcd09e8fced75b19ca928bd4a790af61ffc2"
+lazy = true
+
+    [[VARNAv3-93_jar.download]]
+    sha256 = "58e19c60214ca15f8aefe91ba0feafde3c21b2f30700d8b5b718a3c5bf7aaa5d"
+    url = "https://gist.github.com/marcom/e9f305a65fc6fbd0fef6df2d66d92f88/raw/7141dcd09e8fced75b19ca928bd4a790af61ffc2.tar.gz"
