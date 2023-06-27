@@ -109,14 +109,14 @@ VARNA.plot_compare(dbn1="(((.....)))", seq1="GCGAAAAACGC",
 You will need a working Java installation (can be headless i think).
 You can test this by running:
 ```julia
-run(`java -version`)
+Sys.which("java")
 ```
-If you don't get an error, plotting with VARNA should work.
+If you get a file path (e.g. `"/usr/bin/java"`) and not `nothing`,
+plotting with VARNA should work.
 
 The VARNA jar file will get downloaded automatically the first time
-you plot something with VARNA. It gets stored in a scratch space that
-gets cleaned up by the Julia package manager when you uninstall
-PlotRNA.
+you plot something with one of the VARNA functions. It gets stored in
+the Julia artifacts directory.
 
 
 #### VARNA plot options
