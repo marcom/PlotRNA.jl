@@ -5,25 +5,8 @@ module VARNA
 #   `-foo` : error, no argument for option foo
 #   `-foo bar` : no error or warning
 
-using Scratch: @get_scratch!
-
-const _download_url = "https://varna.lri.fr/bin/VARNAv3-93.jar"
-
-# this will be filled in by `__init__()`
-_download_cache = ""
-
-function __init__()
-    global _download_cache = @get_scratch!("jar")
-end
-
-function _download_varna_jar(url=_download_url)
-    fname = joinpath(_download_cache, basename(url))
-    if !isfile(fname)
-        @info "downloading VARNA jar file from $url"
-        download(url, fname)
-    end
-    return fname
-end
+using Pkg.Artifacts: @artifact_str
+_get_varna_jar() = artifact"VARNAv3-93_jar/VARNAv3-93.jar"
 
 # VARNA-3.93 supported formats: JPEG,PNG,EPS,XFIG,SVG
 const _map_fileendings_to_mime = Dict(
@@ -187,7 +170,7 @@ function plot(dbn::AbstractString;
               fileformat::AbstractString="svg",
               verbose::Bool=false,
               plot_opts...)
-    varna_jarpath = _download_varna_jar()
+    varna_jarpath = _get_varna_jar()
     if length(dbn) != length(seq)
         throw(ArgumentError("structure and sequence must have same length: $(length(dbn)) != $(length(seq))"))
     end
@@ -226,7 +209,7 @@ function plot_compare(; dbn1::AbstractString,
                       fileformat::AbstractString="svg",
                       verbose::Bool=false,
                       plot_opts...)
-    varna_jarpath = _download_varna_jar()
+    varna_jarpath = _get_varna_jar()
     if length(dbn1) != length(dbn2) || length(dbn1) != length(seq1) || length(dbn1) != length(seq2)
         throw(ArgumentError("all structures and sequences must have same length, here they are: " *
             "dbn1=$(length(dbn1)), seq1=$(length(seq1)), dbn2=$(length(dbn2)), seq2=$(length(seq2)))"))
