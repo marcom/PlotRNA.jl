@@ -5,7 +5,8 @@ module VARNA
 #   `-foo` : error, no argument for option foo
 #   `-foo bar` : no error or warning
 
-using Pkg.Artifacts: @artifact_str
+# TODO, this doesn't work: using LazyArtifacts: @artifact_str
+using LazyArtifacts
 _get_varna_jar() = artifact"VARNAv3-93_jar/VARNAv3-93.jar"
 
 # VARNA-3.93 supported formats: JPEG,PNG,EPS,XFIG,SVG
