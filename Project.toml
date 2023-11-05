@@ -24,7 +24,7 @@ UnicodePlotsExt = "UnicodePlots"
 
 [compat]
 Aqua = "0.6"
-BioStockholm = "0.1"
+BioStockholm = "0.1,0.2"
 CairoMakie = "0.10"
 ColorSchemes = "3.18"
 Luxor = "3.3"
